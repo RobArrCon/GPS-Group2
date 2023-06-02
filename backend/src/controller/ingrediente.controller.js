@@ -24,8 +24,8 @@ const getAllIngrediente = async (req, res, next) => {
 
 const getOneIngrediente = async (req, res, next) => {
   try {
-    const { codigo } = req.params
-    const query = await pool.query('SELECT * FROM ingrediente WHERE codigo_ingrediente=$1', [codigo])
+    const { nombre } = req.params
+    const query = await pool.query('SELECT * FROM ingrediente WHERE nombre_ingrediente=$1', [nombre])
     res.status(200).json(query.rows[0])
   } catch (error) {
     next(error)
@@ -35,8 +35,8 @@ const getOneIngrediente = async (req, res, next) => {
 
 const deleteIngrediente = async (req, res, next) => {
   try {
-    const { codigo } = req.params
-    const query = await pool.query('DELETE FROM ingrediente WHERE codigo_ingrediente = $1', [codigo])
+    const { nombre } = req.params
+    const query = await pool.query('DELETE FROM ingrediente WHERE nombre_ingrediente = $1', [nombre])
     if (query.rowCount === 0) {
       return res.status(404).json({ message: 'Ingrediente no encontrado' })
     }

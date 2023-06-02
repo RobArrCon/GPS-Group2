@@ -5,8 +5,8 @@ const router = Router()
 
 router.post('/ingrediente', createIngrediente)
 router.get('/ingrediente', getAllIngrediente)
-router.get('/ingrediente', getOneIngrediente)
-router.delete('/ingrediente', deleteIngrediente)
+router.get('/ingrediente/:nombre', getOneIngrediente)
+router.delete('/ingrediente/:nombre', deleteIngrediente)
 router.put('/ingrediente', updateIngrediente)
 
 module.exports = router
