@@ -1,6 +1,8 @@
 const express = require('express')
 const cors = require('cors')
 
+const UsuarioRoutes = require('./routes/usuario.routes')
+
 const app = express()
 const dotenv = require('dotenv')
 dotenv.config()
@@ -8,6 +10,9 @@ dotenv.config()
 // MIDDLEWARES
 app.use(cors())
 app.use(express.json())
+
+// RUTAS
+app.use('/api', UsuarioRoutes)
 
 // ERROR HANDLING
 app.use((err, req, res, next) => {
