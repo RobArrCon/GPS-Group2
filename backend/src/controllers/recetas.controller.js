@@ -2,9 +2,12 @@ const pool = require('../db')
 
 const createReceta = async (req, res, next) => {
   try {
-    const { codigoReceta, nombreReceta, descripcionReceta } = req.body
-    const query = await pool.query('INSERT INTO receta (codigo_receta, nombre_receta, descripcion_receta) VALUES($1,$2,$3) RETURNING *',
-      [codigoReceta, nombreReceta, descripcionReceta])
+    console.log('Se llego al createReceta')
+    const { codigoReceta, nombreReceta, preparacion } = req.body
+    console.log('Se llego al pre query')
+    const query = await pool.query('INSERT INTO receta (codigo_receta, nombre_receta, preparacion) VALUES($1, $2, $3) RETURNING *',
+      [codigoReceta, nombreReceta, preparacion])
+    console.log('Se llego al post query')
     res.status(200).json(query.row[0])
   } catch (error) {
     next(error)
@@ -46,10 +49,10 @@ const deleteReceta = async (req, res, next) => {
 
 const updateReceta = async (req, res, next) => {
   try {
-    const { codigoReceta, nombreReceta, descripcionReceta } = req.body
+    const { codigoReceta, nombreReceta, preparacion } = req.body
     const query = await pool.query(
-      'UPDATE receta SET nombre_receta = $2, descripcion_receta = $3 WHERE codigo_receta = $1 RETURNING *',
-      [codigoReceta, nombreReceta, descripcionReceta]
+      'UPDATE receta SET nombre_receta = $2, preparacion = $3 WHERE codigo_receta = $1 RETURNING *',
+      [codigoReceta, nombreReceta, preparacion]
     )
     if (query.rowCount === 0) {
       return res.status(404).json({ message: 'receta no encontrada' })
