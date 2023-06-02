@@ -5,7 +5,7 @@ const createIngrediente = async (req, res, next) => {
     const { codigo, nombre, descripcion, categoria } = req.body
     const query = await pool.query('INSERT INTO ingrediente (codigo_ingrediente,nombre_ingrediente,descripcion_ingrediente,categoria_ingrediente) VALUES($1,$2,$3,$4) RETURNING *',
       [codigo, nombre, descripcion, categoria])
-    res.status(200).json(query.row[0])
+    res.status(200).json(query.rows[0])
   } catch (error) {
     next(error)
     res.status(400).json({ message: 'No se pudo ingresar ingrediente en la base de datos' })
@@ -26,7 +26,7 @@ const getOneIngrediente = async (req, res, next) => {
   try {
     const { codigo } = req.params
     const query = await pool.query('SELECT * FROM ingrediente WHERE codigo_ingrediente=$1', [codigo])
-    res.status(200).json(query.row[0])
+    res.status(200).json(query.rows[0])
   } catch (error) {
     next(error)
     res.status(400).json({ message: 'no se se encontro el ingrediente' })
