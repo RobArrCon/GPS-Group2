@@ -1,6 +1,9 @@
 const express = require('express')
 const cors = require('cors')
 
+const listaRoutes = require('../src/routes/lista.routes')
+const postRoutes = require('../src/routes/post.routes')
+
 const app = express()
 const dotenv = require('dotenv')
 dotenv.config()
@@ -16,6 +19,10 @@ app.use((err, req, res, next) => {
     message: err.message
   })
 })
+
+// RUTAS
+app.use('/api', listaRoutes)
+app.use('/api', postRoutes)
 
 // SERVER
 const port = process.env.PORT
