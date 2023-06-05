@@ -1,7 +1,7 @@
 const { check } = require('express-validator')
 const { validateResult } = require('../helpers/validateHelpers.js')
 
-const validatedReceta = [
+const validateReceta = [
 
   check('codigoReceta')
     .exists().notEmpty()
@@ -15,4 +15,4 @@ const validatedReceta = [
     validateResult(req, res, next)
   }]
 
-export default validatedReceta
+module.exports = { validateReceta }
