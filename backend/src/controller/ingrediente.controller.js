@@ -51,14 +51,15 @@ const updateIngrediente = async (req, res, next) => {
   try {
     const { codigo, nombre, descripcion, categoria } = req.body
     const query = await pool.query(
-      'UPDATE * ingrediente SET nombre_ingrediente = $2, descripcion_ingrediente = $3, categoria_ingrediente = $4',
+      'UPDATE ingrediente SET nombre_ingrediente = $2, descripcion_ingrediente = $3, categoria_ingrediente = $4 WHERE codigo_ingrediente = $1 RETURNING *',
       [codigo, nombre, descripcion, categoria])
     if (query.rowCount === 0) {
       return res.status(404).json({ message: 'Ingrediente no encontrado' })
     }
+    return res.status(200).json({ message: 'ingrediente modificado exitosamente' })
   } catch (error) {
     next(error)
-    res.status(400).json({ message: 'no se se modifico el ingrediente' })
+    res.status(400).json({ message: 'no se modifico el ingrediente' })
   }
 }
 

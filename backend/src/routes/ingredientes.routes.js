@@ -7,6 +7,6 @@ router.post('/ingrediente', createIngrediente)
 router.get('/ingrediente', getAllIngrediente)
 router.get('/ingrediente/:nombre', getOneIngrediente)
 router.delete('/ingrediente/:nombre', deleteIngrediente)
-router.put('/ingrediente', updateIngrediente)
+router.put('/ingrediente/:nombre', updateIngrediente)
 
 module.exports = router
