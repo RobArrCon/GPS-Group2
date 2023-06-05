@@ -3,10 +3,11 @@ const { validateResult } = require('../helpers/validateHelper')
 
 const validateIngrediente = [
 
+  check('nombre').exists().not().isEmpty().matches(/^[A-ZÑa-zñáéíóúÁÉÍÓÚ'°]+$/),
+  check('descripcion').exists().not().isEmpty(),
+  check('categoria').exists().not().isEmpty(),
+
   (req, res, next) => {
-    check('nombre').exists().not().isEmpty().matches(/^[A-ZÑa-zñáéíóúÁÉÍÓÚ'°]+$/)
-    check('descripcion').exists().not().isEmpty()
-    check('categoria').exists().not().isEmpty()
     validateResult(req, res, next)
   }
 ]
