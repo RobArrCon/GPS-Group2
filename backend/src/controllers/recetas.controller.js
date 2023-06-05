@@ -1,14 +1,11 @@
-const pool = require('../db')
+const pool = require('../db.js')
 
 const createReceta = async (req, res, next) => {
   try {
-    console.log('Se llego al createReceta')
     const { codigoReceta, nombreReceta, preparacion } = req.body
-    console.log('Se llego al pre query')
     const query = await pool.query('INSERT INTO receta (codigo_receta, nombre_receta, preparacion) VALUES($1, $2, $3) RETURNING *',
       [codigoReceta, nombreReceta, preparacion])
-    console.log('Se llego al post query')
-    res.status(200).json(query.row[0])
+    res.status(200).json(query.rows[0])
   } catch (error) {
     next(error)
     res.status(400).json({ message: 'No se pudo ingresar esta receta en la base de datos' })
@@ -29,7 +26,7 @@ const getOneReceta = async (req, res, next) => {
   try {
     const { nombreReceta } = req.params
     const query = await pool.query('SELECT * FROM receta WHERE nombre_receta=$1', [nombreReceta])
-    res.status(200).json(query.row[0])
+    res.status(200).json(query.rows[0])
   } catch (error) {
     next(error)
     res.status(400).json({ message: 'no se se encontró la receta' })
