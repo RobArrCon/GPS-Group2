@@ -2,14 +2,14 @@ const pool = require('../db')
 
 const createPost = async (req, res, next) => {
   try {
-    const { codigoPost, tituloPost, detallePost, correoUsuario } = req.body
+    const { codigoPost, tituloPost, detallePost, nombreUsuario } = req.body
     const fecha = new Date()
     const dia = fecha.getDate()
     const mes = fecha.getMonth() + 1
     const year = fecha.getFullYear()
     const fechaFinal = year + '-' + mes + '-' + dia
-    const query = await pool.query('INSERT INTO post (codigo_post, titulo_post, detalle_post, fecha_publicacion, correo) VALUES($1,$2,$3,$4,$5) RETURNING *',
-      [codigoPost, tituloPost, detallePost, fechaFinal, correoUsuario])
+    const query = await pool.query('INSERT INTO post (codigo_post, titulo_post, detalle_post, fecha_publicacion, nombre_usuario) VALUES($1,$2,$3,$4,$5) RETURNING *',
+      [codigoPost, tituloPost, detallePost, fechaFinal, nombreUsuario])
     res.status(200).json(query.rows[0])
   } catch (error) {
     next(error)
@@ -19,14 +19,14 @@ const createPost = async (req, res, next) => {
 
 const createComentario = async (req, res, next) => {
   try {
-    const { correoUsuario, codigoPost, detalleComentario } = req.body
+    const { nombreUsuario, codigoPost, detalleComentario } = req.body
     const fecha = new Date()
     const dia = fecha.getDate()
     const mes = fecha.getMonth() + 1
     const year = fecha.getFullYear()
     const fechaFinal = year + '-' + mes + '-' + dia
-    const query = await pool.query('INSERT INTO comentario (correo, codigo_post, detalle_comentario, fecha_comentario) VALUES($1,$2,$3,$4) RETURNING *',
-      [correoUsuario, codigoPost, detalleComentario, fechaFinal])
+    const query = await pool.query('INSERT INTO comentario (nombre_usuario, codigo_post, detalle_comentario, fecha_comentario) VALUES($1,$2,$3,$4) RETURNING *',
+      [nombreUsuario, codigoPost, detalleComentario, fechaFinal])
     res.status(200).json(query.rows[0])
   } catch (error) {
     next(error)
@@ -46,8 +46,8 @@ const getAllPost = async (req, res, next) => {
 
 const getAllPostUsuario = async (req, res, next) => {
   try {
-    const { correoUsuario } = req.params
-    const query = await pool.query('SELECT * FROM post WHERE correo = $1', [correoUsuario])
+    const { nombreUsuario } = req.params
+    const query = await pool.query('SELECT * FROM post WHERE nombre_usuario = $1', [nombreUsuario])
     res.status(200).json(query.rows)
   } catch (error) {
     next(error)

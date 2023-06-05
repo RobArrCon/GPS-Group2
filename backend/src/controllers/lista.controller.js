@@ -2,9 +2,9 @@ const pool = require('../db')
 
 const createLista = async (req, res, next) => {
   try {
-    const { codigoLista, nombreLista, correoUsuario } = req.body
-    const query = await pool.query('INSERT INTO listaCompra (codigo_lista, nombre_lista , correo) VALUES($1,$2,$3) RETURNING *',
-      [codigoLista, nombreLista, correoUsuario])
+    const { codigoLista, nombreLista, nombreUsuario } = req.body
+    const query = await pool.query('INSERT INTO listaCompra (codigo_lista, nombre_lista, nombre_usuario) VALUES($1,$2,$3) RETURNING *',
+      [codigoLista, nombreLista, nombreUsuario])
     res.status(200).json(query.rows[0])
   } catch (error) {
     next(error)
@@ -26,9 +26,9 @@ const addToLista = async (req, res, next) => {
 
 const createListaFav = async (req, res, next) => {
   try {
-    const { codigoLista, correoUsuario } = req.body
-    const query = await pool.query('INSERT INTO listaCompra (codigo_lista, nombre_lista , correo) VALUES($1,$2,$3) RETURNING *',
-      [codigoLista, 'Favoritos', correoUsuario])
+    const { codigoLista, nombreUsuario } = req.body
+    const query = await pool.query('INSERT INTO listaCompra (codigo_lista, nombre_lista, nombre_usuario) VALUES($1,$2,$3) RETURNING *',
+      [codigoLista, 'Favoritos', nombreUsuario])
     res.status(200).json(query.rows[0])
   } catch (error) {
     next(error)
@@ -38,8 +38,8 @@ const createListaFav = async (req, res, next) => {
 
 const getAllListasUsuario = async (req, res, next) => {
   try {
-    const { correoUsuario } = req.params
-    const query = await pool.query('SELECT * FROM listaCompra WHERE correo=$1', [correoUsuario])
+    const { nombreUsuario } = req.params
+    const query = await pool.query('SELECT * FROM listaCompra WHERE nombre_usuario=$1', [nombreUsuario])
     res.status(200).json(query.rows)
   } catch (error) {
     next(error)
