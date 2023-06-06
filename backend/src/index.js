@@ -6,6 +6,8 @@ const UsuarioRoutes = require('./routes/usuario.routes')
 
 const ingredienteRoutes = require('./routes/ingredientes.routes')
 
+const listaRoutes = require('../src/routes/lista.routes')
+const postRoutes = require('../src/routes/post.routes')
 const CategoriaRoutes = require('./Routes/Categoria.Routes')
 
 const app = express()
@@ -30,6 +32,8 @@ app.use((err, req, res, next) => {
 })
 
 // RUTAS
+app.use('/api', listaRoutes)
+app.use('/api', postRoutes)
 app.use('/api', CategoriaRoutes)
 
 // SERVER
