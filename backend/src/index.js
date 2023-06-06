@@ -1,5 +1,6 @@
 const express = require('express')
 const cors = require('cors')
+const recetaRoute = require('./routes/recetas.routes')
 
 const UsuarioRoutes = require('./routes/usuario.routes')
 
@@ -13,6 +14,7 @@ app.use(express.json())
 
 // RUTAS
 app.use('/api', UsuarioRoutes)
+app.use('/api', recetaRoute)
 
 // ERROR HANDLING
 app.use((err, req, res, next) => {
