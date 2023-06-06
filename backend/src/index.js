@@ -4,6 +4,8 @@ const recetaRoute = require('./routes/recetas.routes')
 
 const UsuarioRoutes = require('./routes/usuario.routes')
 
+const ingredienteRoutes = require('./routes/ingredientes.routes')
+
 const app = express()
 const dotenv = require('dotenv')
 dotenv.config()
@@ -15,6 +17,7 @@ app.use(express.json())
 // RUTAS
 app.use('/api', UsuarioRoutes)
 app.use('/api', recetaRoute)
+app.use('/api', ingredienteRoutes)
 
 // ERROR HANDLING
 app.use((err, req, res, next) => {
