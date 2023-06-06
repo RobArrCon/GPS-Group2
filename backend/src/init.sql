@@ -1,3 +1,6 @@
+
+--FALTA RELACION INGREDIENTE CON PRODUCTO REVISAR EL MODELO DE BDD
+
 CREATE TABLE Receta (
   codigo_receta INT NOT NULL,
   nombre_receta VARCHAR(100),
@@ -16,7 +19,7 @@ CREATE TABLE Usuario (
   correo VARCHAR(45),
   clave_user VARCHAR(45),
   rol_user VARCHAR(45),
-  PRIMARY KEY (nombre_usuario )
+  PRIMARY KEY (nombre_usuario)
   );
 
   CREATE TABLE Ingrediente (
@@ -24,7 +27,7 @@ CREATE TABLE Usuario (
   nombre_ingrediente VARCHAR(45),
   descripcion_ingrediente VARCHAR(45),
   categoria_ingrediente VARCHAR(45),
-  PRIMARY KEY (codigo_ingrediente)
+  PRIMARY KEY (codigo_ingrediente),
   );
 
 CREATE TABLE Producto (
@@ -43,8 +46,8 @@ CREATE TABLE Opinion (
   detalle_opinion VARCHAR(100),
   fecha_opinion DATE,
   num_valoracion INT,
-  PRIMARY KEY (nombre_usuario , codigo_producto),
-  FOREIGN KEY (nombre_usuario ) REFERENCES Usuario (nombre_usuario ),
+  PRIMARY KEY (nombre_usuario, codigo_producto),
+  FOREIGN KEY (nombre_usuario) REFERENCES Usuario (nombre_usuario),
   FOREIGN KEY (codigo_producto) REFERENCES Producto (codigo_producto)
 );
 
@@ -55,7 +58,7 @@ CREATE TABLE Post (
   fecha_publicacion DATE,
   nombre_usuario VARCHAR(45) NOT NULL,
   PRIMARY KEY (codigo_post),
-  FOREIGN KEY (nombre_usuario ) REFERENCES Usuario (nombre_usuario )
+  FOREIGN KEY (nombre_usuario ) REFERENCES Usuario (nombre_usuario)
   );
 
 CREATE TABLE Comentario (
@@ -73,7 +76,7 @@ CREATE TABLE ListaCompra (
   nombre_lista VARCHAR(45) NULL,
   nombre_usuario VARCHAR(45) NOT NULL,
   PRIMARY KEY (codigo_lista),
-  FOREIGN KEY (nombre_usuario ) REFERENCES Usuario (nombre_usuario )
+  FOREIGN KEY (nombre_usuario) REFERENCES Usuario (nombre_usuario)
   );
 
 
