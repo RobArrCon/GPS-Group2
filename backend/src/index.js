@@ -6,6 +6,8 @@ const UsuarioRoutes = require('./routes/usuario.routes')
 
 const ingredienteRoutes = require('./routes/ingredientes.routes')
 
+const CategoriaRoutes = require('./Routes/Categoria.Routes')
+
 const app = express()
 const dotenv = require('dotenv')
 dotenv.config()
@@ -26,6 +28,9 @@ app.use((err, req, res, next) => {
     message: err.message
   })
 })
+
+// RUTAS
+app.use('/api', CategoriaRoutes)
 
 // SERVER
 const port = process.env.PORT
