@@ -1,5 +1,8 @@
 const express = require('express')
 const cors = require('cors')
+const recetaRoute = require('./routes/recetas.routes')
+
+const UsuarioRoutes = require('./routes/usuario.routes')
 
 const ingredienteRoutes = require('./routes/ingredientes.routes')
 
@@ -10,7 +13,12 @@ dotenv.config()
 // MIDDLEWARES
 app.use(cors())
 app.use(express.json())
+
+// RUTAS
+app.use('/api', UsuarioRoutes)
+app.use('/api', recetaRoute)
 app.use('/api', ingredienteRoutes)
+
 // ERROR HANDLING
 app.use((err, req, res, next) => {
   return res.status(500).json({
