@@ -3,9 +3,6 @@ const { validateResult } = require('../helpers/validateHelpers.js')
 
 const validateReceta = [
 
-  check('codigoReceta')
-    .exists().notEmpty()
-    .isInt(),
   check('nombreReceta')
     .exists().notEmpty(),
   check('preparacion')
