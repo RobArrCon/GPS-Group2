@@ -8,6 +8,7 @@ const ingredienteRoutes = require('./routes/ingredientes.routes')
 
 const listaRoutes = require('../src/routes/lista.routes')
 const postRoutes = require('../src/routes/post.routes')
+const CategoriaRoutes = require('./Routes/Categoria.Routes')
 
 const app = express()
 const dotenv = require('dotenv')
@@ -33,6 +34,7 @@ app.use((err, req, res, next) => {
 // RUTAS
 app.use('/api', listaRoutes)
 app.use('/api', postRoutes)
+app.use('/api', CategoriaRoutes)
 
 // SERVER
 const port = process.env.PORT
