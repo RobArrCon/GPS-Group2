@@ -22,6 +22,9 @@ app.use(express.json())
 app.use('/api', UsuarioRoutes)
 app.use('/api', recetaRoute)
 app.use('/api', ingredienteRoutes)
+app.use('/api', listaRoutes)
+app.use('/api', postRoutes)
+app.use('/api', CategoriaRoutes)
 
 // ERROR HANDLING
 app.use((err, req, res, next) => {
@@ -30,11 +33,6 @@ app.use((err, req, res, next) => {
     message: err.message
   })
 })
-
-// RUTAS
-app.use('/api', listaRoutes)
-app.use('/api', postRoutes)
-app.use('/api', CategoriaRoutes)
 
 // SERVER
 const port = process.env.PORT
