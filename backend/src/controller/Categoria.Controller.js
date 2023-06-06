@@ -2,9 +2,9 @@ const pool = require('../db')
 
 const createCategoria = async (req, res, next) => {
   try {
-    const { codigoCategoria, nombreCategoria, descripcionCategoria } = req.body
-    const query = await pool.query('INSERT INTO categoria (codigo_categoria, nombre_categoria, descripcion_categoria) VALUES($1,$2,$3) RETURNING *',
-      [codigoCategoria, nombreCategoria, descripcionCategoria])
+    const { nombreCategoria, descripcionCategoria } = req.body
+    const query = await pool.query('INSERT INTO categoria (nombre_categoria, descripcion_categoria) VALUES($1,$2) RETURNING *',
+      [nombreCategoria, descripcionCategoria])
     res.status(200).json(query.rows[0])
   } catch (error) {
     next(error)
@@ -52,10 +52,10 @@ const deleteCategoria = async (req, res, next) => {
 
 const updateCategoria = async (req, res, next) => {
   try {
-    const { codigoCategoria, nombreCategoria, descripcionCategoria } = req.body
+    const { nombreCategoria, descripcionCategoria } = req.body
     const query = await pool.query(
-      'UPDATE categoria SET nombre_categoria = $2, descripcion_categoria = $3 WHERE codigo_categoria = $1 RETURNING *',
-      [codigoCategoria, nombreCategoria, descripcionCategoria]
+      'UPDATE categoria SET nombre_categoria = $1, descripcion_categoria = $2 WHERE codigo_categoria = $1 RETURNING *',
+      [nombreCategoria, descripcionCategoria]
     )
     if (query.rowCount === 0) {
       return res.status(404).json({ message: 'Categoría no encontrada' })
