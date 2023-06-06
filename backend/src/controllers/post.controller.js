@@ -2,14 +2,14 @@ const pool = require('../db')
 
 const createPost = async (req, res, next) => {
   try {
-    const { codigoPost, tituloPost, detallePost, nombreUsuario } = req.body
+    const { tituloPost, detallePost, nombreUsuario } = req.body
     const fecha = new Date()
     const dia = fecha.getDate()
     const mes = fecha.getMonth() + 1
     const year = fecha.getFullYear()
     const fechaFinal = year + '-' + mes + '-' + dia
-    const query = await pool.query('INSERT INTO post (codigo_post, titulo_post, detalle_post, fecha_publicacion, nombre_usuario) VALUES($1,$2,$3,$4,$5) RETURNING *',
-      [codigoPost, tituloPost, detallePost, fechaFinal, nombreUsuario])
+    const query = await pool.query('INSERT INTO post (titulo_post, detalle_post, fecha_publicacion, nombre_usuario) VALUES($1,$2,$3,$4,$5) RETURNING *',
+      [tituloPost, detallePost, fechaFinal, nombreUsuario])
     res.status(200).json(query.rows[0])
   } catch (error) {
     next(error)

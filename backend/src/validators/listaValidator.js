@@ -3,7 +3,6 @@ const { validateResult } = require('../helpers/validateHelper')
 
 const validateLista = [
 
-  check('codigoLista').exists().not().isEmpty(),
   check('nombreLista').exists().not().isEmpty(),
   check('nombreUsuario').exists().not().isEmpty(),
 
@@ -14,7 +13,6 @@ const validateLista = [
 
 const validateListaFav = [
 
-  check('codigoLista').exists().not().isEmpty(),
   check('nombreUsuario').exists().not().isEmpty(),
 
   (req, res, next) => {
