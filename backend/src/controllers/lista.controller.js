@@ -24,6 +24,18 @@ const addToLista = async (req, res, next) => {
   }
 }
 
+const deleteFromLista = async (req, res, next) => {
+  try {
+    const { codigoLista, codigoProducto } = req.body
+    const query = await pool.query('DELETE FROM Producto_IN_ListaCompra WHERE codigo_lista = $1 AND codigo_producto = $2',
+      [codigoLista, codigoProducto])
+    if (query.rowCount === 0) {
+      return res.status(404).json({ message: 'Lista no encontrada' })
+    }
+    return res.status(200).json({ message: 'Lista eliminada exitosamente' })
+  } catch (error) {}
+}
+
 const createListaFav = async (req, res, next) => {
   try {
     const { nombreUsuario } = req.body
@@ -57,10 +69,33 @@ const getAllListas = async (req, res, next) => {
   }
 }
 
+const getListaFavUsuario = async (req, res, next) => {
+  try {
+    const { nombreUsuario } = req.params
+    const query = await pool.query('SELECT * FROM listaCompra WHERE nombre_usuario = $1 AND nombre_lista = $2',
+      [nombreUsuario, 'Favoritos'])
+    res.status(200).json(query.rows)
+  } catch (error) {
+    next(error)
+    res.status(400).json({ message: 'Error al obtener el contenido' })
+  }
+}
+
+const getProductosLista = async (req, res, next) => {
+  try {
+    const { codigoLista } = req.params
+    const query = await pool.query('SELECT * FROM Producto_IN_ListaCompra WHERE codigo_lista = $1', [codigoLista])
+    res.status(200).json(query.rows)
+  } catch (error) {
+    next(error)
+    res.status(400).json({ message: 'Error al obtener el contenido' })
+  }
+}
+
 const getOneLista = async (req, res, next) => {
   try {
     const { codigoLista } = req.params
-    const query = await pool.query('SELECT * FROM listaCompra WHERE codigo_lista=$1', [codigoLista])
+    const query = await pool.query('SELECT * FROM listaCompra WHERE codigo_lista = $1', [codigoLista])
     res.status(200).json(query.rows[0])
   } catch (error) {
     next(error)
@@ -86,5 +121,8 @@ module.exports = {
   getAllListasUsuario,
   getAllListas,
   getOneLista,
-  deleteLista
+  getListaFavUsuario,
+  getProductosLista,
+  deleteLista,
+  deleteFromLista
 }

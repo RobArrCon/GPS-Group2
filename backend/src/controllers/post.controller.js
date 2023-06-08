@@ -17,23 +17,6 @@ const createPost = async (req, res, next) => {
   }
 }
 
-const createComentario = async (req, res, next) => {
-  try {
-    const { nombreUsuario, codigoPost, detalleComentario } = req.body
-    const fecha = new Date()
-    const dia = fecha.getDate()
-    const mes = fecha.getMonth() + 1
-    const year = fecha.getFullYear()
-    const fechaFinal = year + '-' + mes + '-' + dia
-    const query = await pool.query('INSERT INTO comentario (nombre_usuario, codigo_post, detalle_comentario, fecha_comentario) VALUES($1,$2,$3,$4) RETURNING *',
-      [nombreUsuario, codigoPost, detalleComentario, fechaFinal])
-    res.status(200).json(query.rows[0])
-  } catch (error) {
-    next(error)
-    res.status(400).json({ message: 'No es posible crear el comentario' })
-  }
-}
-
 const getAllPost = async (req, res, next) => {
   try {
     const query = await pool.query('SELECT * FROM post')
@@ -96,7 +79,6 @@ const deletePost = async (req, res, next) => {
 
 module.exports = {
   createPost,
-  createComentario,
   getAllPost,
   getAllPostUsuario,
   getOnePost,
