@@ -54,7 +54,7 @@ const updateCategoria = async (req, res, next) => {
   try {
     const { nombreCategoria, descripcionCategoria } = req.body
     const query = await pool.query(
-      'UPDATE categoria SET nombre_categoria = $1, descripcion_categoria = $2 WHERE codigo_categoria = $1 RETURNING *',
+      'UPDATE categoria SET nombre_categoria = $1, descripcion_categoria = $2 WHERE nombre_categoria = $1 RETURNING *',
       [nombreCategoria, descripcionCategoria]
     )
     if (query.rowCount === 0) {
