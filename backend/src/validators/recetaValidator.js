@@ -1,5 +1,5 @@
 const { check } = require('express-validator')
-const { validateResult } = require('../helpers/validateHelpers.js')
+const { validateResult } = require('../helpers/validateHelper.js')
 
 const validateReceta = [
 

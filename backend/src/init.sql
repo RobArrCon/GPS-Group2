@@ -27,7 +27,7 @@ CREATE TABLE Usuario (
   nombre_ingrediente VARCHAR(45),
   descripcion_ingrediente VARCHAR(45),
   categoria_ingrediente VARCHAR(45),
-  PRIMARY KEY (codigo_ingrediente),
+  PRIMARY KEY (codigo_ingrediente)
   );
 
 CREATE TABLE Producto (
@@ -98,9 +98,9 @@ CREATE TABLE Producto_IN_Receta (
   );
 
 CREATE TABLE Ingrediente_IN_Producto(
- codigo_producto INT NOT NULL,
- codigo_ingrediente INT NOT NULL,
- PRIMARY KEY (codigo_producto, codigo_ingrediente),
- FOREIGN KEY (codigo_producto) REFERENCES Producto (codigo_producto),
- FOREIGN KEY (codigo_ingrediente) REFERENCES Ingrediente (codigo_ingrediente)
- );
+  codigo_producto INT NOT NULL,
+  codigo_ingrediente INT NOT NULL,
+  PRIMARY KEY (codigo_producto, codigo_ingrediente),
+  FOREIGN KEY (codigo_producto) REFERENCES Producto (codigo_producto),
+  FOREIGN KEY (codigo_ingrediente) REFERENCES Ingrediente (codigo_ingrediente)
+  );
