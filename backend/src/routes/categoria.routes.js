@@ -1,5 +1,7 @@
 const { Router } = require('express')
+
 const { createCategoria, deleteCategoria, getOneCategoria, getAllCategorias, updateCategoria } = require('../controllers/categoria.controller')
+
 const { validateCategoria } = require('../validators/categoriaValidator')
 
 const router = Router()
