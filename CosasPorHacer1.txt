@@ -1,0 +1,1 @@
+Eliminar el codigo de categoria y poner el nombre como primary key.
