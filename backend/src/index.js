@@ -7,6 +7,7 @@ const listaRoutes = require('../src/routes/lista.routes')
 const postRoutes = require('../src/routes/post.routes')
 const CategoriaRoutes = require('./routes/Categoria.Routes')
 const opinionRoutes = require('./routes/opinion.routes')
+const comentarioRoutes = require('./routes/comentario.routes')
 const app = express()
 const dotenv = require('dotenv')
 dotenv.config()
@@ -23,6 +24,7 @@ app.use('/api', listaRoutes)
 app.use('/api', postRoutes)
 app.use('/api', CategoriaRoutes)
 app.use('/api', opinionRoutes)
+app.use('/api', comentarioRoutes)
 // ERROR HANDLING
 app.use((err, req, res, next) => {
   return res.status(500).json({

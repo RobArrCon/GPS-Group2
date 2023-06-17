@@ -8,7 +8,7 @@ const createPost = async (req, res, next) => {
     const mes = fecha.getMonth() + 1
     const year = fecha.getFullYear()
     const fechaFinal = year + '-' + mes + '-' + dia
-    const query = await pool.query('INSERT INTO post (titulo_post, detalle_post, fecha_publicacion, nombre_usuario) VALUES($1,$2,$3,$4,$5) RETURNING *',
+    const query = await pool.query('INSERT INTO post (titulo_post, detalle_post, fecha_publicacion, nombre_usuario) VALUES($1,$2,$3,$4) RETURNING *',
       [tituloPost, detallePost, fechaFinal, nombreUsuario])
     res.status(200).json(query.rows[0])
   } catch (error) {
