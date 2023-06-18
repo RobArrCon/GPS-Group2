@@ -17,7 +17,7 @@ const createIngrediente = async (req, res, next) => {
   }
 }
 
-const getAllIngrediente = async (req, res, next) => {
+async function getAllIngrediente (req, res, next) {
   try {
     const query = await pool.query('SELECT * FROM ingrediente')
     res.status(200).json(query.rows)
