@@ -1,6 +1,6 @@
 const { Router } = require('express')
 const { createUsuario, getAllUsuario, getOneUsuario, DeleteUsuario, LoginUsuario, ChangeContrasena } = require('../controllers/usuario.controller')
-const { validateUsuario } = require('../validators/usuario.validator')
+const { validateUsuario } = require('../validators/usuarioValidator')
 
 const router = Router()
 

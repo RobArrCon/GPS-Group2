@@ -49,7 +49,7 @@ const getOneProductoCod = async (req, res, next) => {
     res.status(400).json({ message: 'no se se encontró el producto por codigo' })
   }
 }
-//SELECT * FROM producto WHERE nombre_producto LIKE '%nombre_producto%' //
+// SELECT * FROM producto WHERE nombre_producto LIKE '%nombre_producto%'
 const searchProducto = async (req, res, next) => {
   try {
     const { nombreProducto } = req.params
@@ -63,7 +63,6 @@ const searchProducto = async (req, res, next) => {
     res.status(400).json({ message: 'ups!, ocurrio un error' })
   }
 }
-
 
 const deleteProducto = async (req, res, next) => {
   try {
@@ -79,10 +78,9 @@ const deleteProducto = async (req, res, next) => {
   }
 }
 
-
 const petitionProducto = async (req, res, next) => {
   try {
-    const { codigoProducto, nombreProducto, descripcionProducto, informacionNutricionalProducto} = req.body
+    const { codigoProducto, nombreProducto, descripcionProducto, informacionNutricionalProducto } = req.body
     const query = await pool.query('INSERT INTO producto (codigo_producto, nombre_producto, descripcion_producto, informacion_nutricional) VALUES($1,$2,$3,$4) RETURNING *',
       [codigoProducto, nombreProducto, descripcionProducto, informacionNutricionalProducto])
     res.status(200).json(query.rows[0])
@@ -95,7 +93,7 @@ const petitionProducto = async (req, res, next) => {
 const classifyProducto = async (req, res, next) => {
   try {
     const { codigoProducto, codigoCategoria } = req.body
-   
+
     const query = await pool.query('UPDATE producto SET codigo_categoria = $1 WHERE codigo_producto = $2 RETURNING *',
       [codigoCategoria, codigoProducto])
     res.status(200).json(query.rows[0])
@@ -121,10 +119,7 @@ const classifyProducto = async (req, res, next) => {
     next(error)
     res.status(400).json({ message: 'ups!, ocurrio un error' })
   }
-}*/
-
-
-
+} */
 
 const updateProducto = async (req, res, next) => {
   try {
@@ -138,7 +133,6 @@ const updateProducto = async (req, res, next) => {
     }
     res.status(200).json(query.rows[0])
   } catch (error) {
-   
     next(error)
     res.status(400).json({ message: 'ups!, ocurrio un error' })
   }
