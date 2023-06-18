@@ -75,7 +75,7 @@ const addToIngrediente = async (req, res, next) => {
         [codigoProducto, codigo])
       res.status(200).json(query.rows[0])
     } else {
-      res.status(400).json({ message: 'Este ingrediente no existe en la base de datos' })
+      res.status(404).json({ message: 'Este ingrediente no fue encontrado en la base de datos' })
     }
   } catch (error) {
     next(error)
