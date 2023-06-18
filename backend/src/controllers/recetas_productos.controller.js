@@ -54,7 +54,8 @@ const deleteProductoReceta = async (req, res, next) => {
       return res.status(404).json({ message: 'producto no encontrado en receta' })
     }
     return res.status(200).json({ message: 'producto removido de la receta' })
-  } catch (error) {}
+  } catch (error) {
+  }
 }
 
 module.exports = {
