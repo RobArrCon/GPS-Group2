@@ -19,7 +19,7 @@ const getAllProductosInReceta = async (req, res, next) => {
     res.status(200).json(query.rows)
   } catch (error) {
     next(error)
-    res.status(400).json({ message: 'error al acceder a la tabla de recetas' })
+    res.status(400).json({ message: 'error al obtener los productos' })
   }
 }
 
@@ -30,7 +30,7 @@ const getAllRecetasWithProducto = async (req, res, next) => {
     res.status(200).json(query.rows[0])
   } catch (error) {
     next(error)
-    res.status(400).json({ message: 'no se se encontró la receta' })
+    res.status(400).json({ message: 'error al obtener las recetas' })
   }
 }
 
