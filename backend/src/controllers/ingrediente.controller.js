@@ -5,7 +5,12 @@ const createIngrediente = async (req, res, next) => {
     const { nombre, descripcion, categoria } = req.body
     const query = await pool.query('INSERT INTO ingrediente (nombre_ingrediente,descripcion_ingrediente,categoria_ingrediente) VALUES($1,$2,$3) RETURNING *',
       [nombre, descripcion, categoria])
-    res.status(200).json(query.rows[0])
+    const query2 = await pool.query('SELECT * FROM ingrediente WHERE nombre_ingrediente = $1')
+    if (query2 > 0) {
+      res.status(400302).json({ message: 'Este ingrediente ya existe' })
+    } else {
+      res.status(200).json(query.rows[0])
+    }
   } catch (error) {
     next(error)
     res.status(400).json({ message: 'No se pudo ingresar ingrediente en la base de datos' })
