@@ -1,6 +1,16 @@
 const express = require('express')
 const cors = require('cors')
-
+const recetaRoutes = require('./routes/recetas.routes')
+const recetaProductosRoutes = require('./routes/recetas_productos.routes')
+const UsuarioRoutes = require('./routes/usuario.routes')
+const ingredienteRoutes = require('./routes/ingredientes.routes')
+const listaRoutes = require('../src/routes/lista.routes')
+const postRoutes = require('../src/routes/post.routes')
+const CategoriaRoutes = require('./routes/categoria.routes')
+const opinionRoutes = require('./routes/opinion.routes')
+const productoRoutes = require('./routes/producto.routes')
+const linkRoutes = require('./routes/link.routes')
+const comentarioRoutes = require('./routes/comentario.routes')
 const app = express()
 const dotenv = require('dotenv')
 dotenv.config()
@@ -8,6 +18,19 @@ dotenv.config()
 // MIDDLEWARES
 app.use(cors())
 app.use(express.json())
+
+// RUTAS
+app.use('/api', UsuarioRoutes)
+app.use('/api', recetaRoutes)
+app.use('/api', ingredienteRoutes)
+app.use('/api', listaRoutes)
+app.use('/api', postRoutes)
+app.use('/api', CategoriaRoutes)
+app.use('/api', opinionRoutes)
+app.use('/api', recetaProductosRoutes)
+app.use('/api', productoRoutes)
+app.use('/api', linkRoutes)
+app.use('/api', comentarioRoutes)
 
 // ERROR HANDLING
 app.use((err, req, res, next) => {
