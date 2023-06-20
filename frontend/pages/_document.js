@@ -1,12 +1,12 @@
-import * as React from 'react';
-import PropTypes from 'prop-types';
-import Document, { Html, Head, Main, NextScript } from 'next/document';
-import createEmotionServer from '@emotion/server/create-instance';
-import theme, { roboto } from '../src/theme';
-import createEmotionCache from '../src/createEmotionCache';
+import * as React from 'react'
+import PropTypes from 'prop-types'
+import Document, { Html, Head, Main, NextScript } from 'next/document'
+import createEmotionServer from '@emotion/server/create-instance'
+import theme, { roboto } from '../src/theme'
+import createEmotionCache from '../src/createEmotionCache'
 
-export default function MyDocument(props) {
-  const { emotionStyleTags } = props;
+export default function MyDocument (props) {
+  const { emotionStyleTags } = props
 
   return (
     <Html lang="es" className={roboto.className}>
@@ -22,24 +22,24 @@ export default function MyDocument(props) {
         <NextScript />
       </body>
     </Html>
-  );
+  )
 }
 
 MyDocument.getInitialProps = async (ctx) => {
-  const originalRenderPage = ctx.renderPage;
+  const originalRenderPage = ctx.renderPage
 
-  const cache = createEmotionCache();
-  const { extractCriticalToChunks } = createEmotionServer(cache);
+  const cache = createEmotionCache()
+  const { extractCriticalToChunks } = createEmotionServer(cache)
   ctx.renderPage = () =>
     originalRenderPage({
       enhanceApp: (App) =>
-        function EnhanceApp(props) {
+        function EnhanceApp (props) {
           return <App emotionCache={cache} {...props} />
-        },
-    });
+        }
+    })
 
-  const initialProps = await Document.getInitialProps(ctx);
-  const emotionStyles = extractCriticalToChunks(initialProps.html);
+  const initialProps = await Document.getInitialProps(ctx)
+  const emotionStyles = extractCriticalToChunks(initialProps.html)
   const emotionStyleTags = emotionStyles.styles.map((style) => (
     <style
       data-emotion={`${style.key} ${style.ids.join(' ')}`}
@@ -47,15 +47,14 @@ MyDocument.getInitialProps = async (ctx) => {
       // eslint-disable-next-line react/no-danger
       dangerouslySetInnerHTML={{ __html: style.css }}
     />
-  ));
+  ))
 
   return {
     ...initialProps,
-    emotionStyleTags,
-  };
-};
+    emotionStyleTags
+  }
+}
 
 MyDocument.propTypes = {
   emotionStyleTags: PropTypes.array.isRequired
 }
-
