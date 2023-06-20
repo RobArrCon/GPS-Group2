@@ -3,9 +3,16 @@ const pool = require('../db')
 const createCategoria = async (req, res, next) => {
   try {
     const { nombreCategoria, descripcionCategoria } = req.body
-    const query = await pool.query('INSERT INTO categoria (nombre_categoria, descripcion_categoria) VALUES($1,$2) RETURNING *',
-      [nombreCategoria, descripcionCategoria])
-    res.status(200).json(query.rows[0])
+
+    const query1 = await pool.query('SELECT * FROM ingrediente WHERE nombre_categoria = $2', [nombreCategoria])
+
+    if (query1.rowCount === 0) {
+      const query = await pool.query('INSERT INTO categoria (nombre_categoria, descripcion_categoria) VALUES($1,$2) RETURNING *',
+        [nombreCategoria, descripcionCategoria])
+      res.status(200).json(query.rows[0])
+    } else {
+      res.status(302).json({ message: 'Esta categoria ya existe.' })
+    }
   } catch (error) {
     next(error)
     res.status(400).json({ message: 'No se pudo ingresar esta categoría en la base de datos' })
@@ -24,7 +31,7 @@ const getAllCategorias = async (req, res, next) => {
 
 const getOneCategoria = async (req, res, next) => {
   try {
-    const { nombreCategoria } = req.params
+    /*const { nombreCategoria } = req.params*/
     const query = await pool.query('SELECT * FROM categoria WHERE nombre_categoria = $1', [nombreCategoria])
     if (query.rowCount === 0) {
       return res.status(404).json({ message: 'Categoría no encontrada' })
