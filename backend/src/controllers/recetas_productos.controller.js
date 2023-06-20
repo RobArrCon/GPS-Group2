@@ -3,15 +3,15 @@ const pool = require('../db.js')
 const addProductoReceta = async (req, res, next) => {
   try {
     const { codigoReceta, codigoProducto } = req.body
-    let validacion = await pool.query('SELECT * FROM productos WHERE $1', [codigoProducto])
-    if (validacion.rowCount > 0) {
-      res.status(400).json({ message: 'producto no se encuentra en la base de datos' })
+    let validacion = await pool.query('SELECT * FROM productos WHERE $1 = codigo_producto', [codigoProducto])
+    if (validacion.rowCount === 0) {
+      res.status(404).json({ message: 'producto no se encuentra en la base de datos' })
       return
     }
 
-    validacion = await pool.query('SELECT * FROM receta WHERE $1', [codigoReceta])
-    if (validacion.rowCount > 0) {
-      res.status(400).json({ message: 'receta no se encuentra en la base de datos' })
+    validacion = await pool.query('SELECT * FROM receta WHERE $1 = codigo_receta', [codigoReceta])
+    if (validacion.rowCount === 0) {
+      res.status(404).json({ message: 'receta no se encuentra en la base de datos' })
       return
     }
 

@@ -68,10 +68,44 @@ const updateIngrediente = async (req, res, next) => {
   }
 }
 
+const addToIngrediente = async (req, res, next) => {
+  try {
+    const { codigoProducto, codigo } = req.body
+
+    const query1 = await pool.query('SELECT * FROM ingrediente WHERE codigo_producto = $1', [codigoProducto])
+    const query2 = await pool.query('SELECT * FROM ingrediente WHERE codigo_ingrediente = $2', [codigo])
+
+    if (query1.rowCount > 0 && query2.rowCount > 0) {
+      const query = await pool.query('INSERT INTO ingrediente (codigo_producto, codigo_ingrediente) VALUES($1,$2) RETURNING *',
+        [codigoProducto, codigo])
+      res.status(200).json(query.rows[0])
+    } else {
+      res.status(404).json({ message: 'Este ingrediente no fue encontrado en la base de datos' })
+    }
+  } catch (error) {
+    next(error)
+    res.status(400).json({ message: 'No es posible añadir el ingrediente' })
+  }
+}
+
+const deleteFromIngrediente = async (req, res, next) => {
+  try {
+    const { codigo, codigoProducto } = req.body
+    const query = await pool.query('DELETE FROM ingrediente WHERE codigo = $1 AND codigo_producto = $2',
+      [codigo, codigoProducto])
+    if (query.rowCount === 0) {
+      return res.status(404).json({ message: 'ingrediente no encontrado' })
+    }
+    return res.status(200).json({ message: 'ingrediente eliminado exitosamente' })
+  } catch (error) {}
+}
+
 module.exports = {
   createIngrediente,
   getAllIngrediente,
   getOneIngrediente,
   deleteIngrediente,
-  updateIngrediente
+  updateIngrediente,
+  addToIngrediente,
+  deleteFromIngrediente
 }
