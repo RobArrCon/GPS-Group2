@@ -20,7 +20,7 @@ const theme = createTheme({
       main: '#19857b'
     },
     error: {
-      main: 'red'
+      main: '#19857b'
     }
   },
   typography: {
