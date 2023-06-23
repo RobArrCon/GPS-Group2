@@ -3,6 +3,18 @@ const pool = require('../db.js')
 const addProductoReceta = async (req, res, next) => {
   try {
     const { codigoReceta, codigoProducto } = req.body
+    let validacion = await pool.query('SELECT * FROM productos WHERE $1 = codigo_producto', [codigoProducto])
+    if (validacion.rowCount === 0) {
+      res.status(404).json({ message: 'producto no se encuentra en la base de datos' })
+      return
+    }
+
+    validacion = await pool.query('SELECT * FROM receta WHERE $1 = codigo_receta', [codigoReceta])
+    if (validacion.rowCount === 0) {
+      res.status(404).json({ message: 'receta no se encuentra en la base de datos' })
+      return
+    }
+
     const query = await pool.query('INSERT INTO Producto_IN_Receta (codigo_receta, codigo_producto) VALUES($1, $2) RETURNING *',
       [codigoReceta, codigoProducto])
     res.status(200).json(query.rows[0])
@@ -42,7 +54,8 @@ const deleteProductoReceta = async (req, res, next) => {
       return res.status(404).json({ message: 'producto no encontrado en receta' })
     }
     return res.status(200).json({ message: 'producto removido de la receta' })
-  } catch (error) {}
+  } catch (error) {
+  }
 }
 
 module.exports = {

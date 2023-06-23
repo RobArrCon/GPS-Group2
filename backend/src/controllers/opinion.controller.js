@@ -22,7 +22,7 @@ const getAllOpinion = async (req, res, next) => {
   }
 }
 
-const getOneOpinion = async (req, res, next) => {
+const getAllporProducto = async (req, res, next) => {
   try {
     const { codigoproducto } = req.params
     const query = await pool.query('SELECT * FROM Opinion WHERE codigo_producto=$1', [codigoproducto])
@@ -62,7 +62,7 @@ const updateOpinion = async (req, res, next) => {
 module.exports = {
   createOpinion,
   getAllOpinion,
-  getOneOpinion,
+  getAllporProducto,
   DeleteOpinion,
   updateOpinion
 }
