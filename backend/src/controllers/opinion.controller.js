@@ -26,7 +26,7 @@ const getOneOpinion = async (req, res, next) => {
   try {
     const { codigoproducto } = req.params
     const query = await pool.query('SELECT * FROM Opinion WHERE codigo_producto=$1', [codigoproducto])
-    res.status(200).json(query.rows[0])
+    res.status(200).json(query.rows)
   } catch (error) {
     next(error)
     res.status(400).json({ message: 'no se se encontro la opinion' })
