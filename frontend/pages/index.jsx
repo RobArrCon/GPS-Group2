@@ -7,6 +7,7 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
+import Stack from '@mui/material/Stack';
 
 const style = {
   position: 'absolute',
@@ -27,8 +28,8 @@ export default function Index () {
   const handleClose = () => setOpen(false);
 
   return (
-    <Box>pagina de recetas<br />,
-    <Button variant="contained">Agregar</Button>
+    <Box>RECETAS<br /><br />
+    <Button color="success" variant="contained">Agregar</Button><br /><br />
     <Card sx={{ maxWidth: 345 }}>
       <CardMedia
        //imagen del producto de receta
@@ -43,7 +44,7 @@ export default function Index () {
       </CardContent>
       <CardActions>
       <div>
-      <Button onClick={handleOpen}>VER</Button>
+      <Button variant='contained' onClick={handleOpen}>VER</Button>
       <Modal
         open={open}
         onClose={handleClose}
@@ -59,10 +60,15 @@ export default function Index () {
           </Typography>
         </Box>
       </Modal>
+      <br></br>
+      <br></br>
+      <Stack direction="row" spacing={2}>
+      <Button color='secondary' variant='contained'>MODIFICAR</Button>
+      <Button color="error" variant='contained' >ELIMINAR</Button>
+    </Stack>
     </div>
       </CardActions>
     </Card>
     </Box>
     )
-   
 }
