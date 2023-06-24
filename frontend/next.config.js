@@ -9,3 +9,5 @@ module.exports = {
     API_URL: process.env.SERVIDOR
   }
 }
+
+module.exports = nextConfig
