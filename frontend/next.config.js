@@ -1,6 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-
   reactStrictMode: true
 }
 
@@ -10,8 +9,3 @@ module.exports = {
     API_URL: process.env.SERVIDOR
   }
 }
-
-
-
-module.exports = nextConfig
-
