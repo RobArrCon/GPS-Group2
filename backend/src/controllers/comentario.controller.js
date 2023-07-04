@@ -21,7 +21,11 @@ const getAllComentarioPost = async (req, res, next) => {
   try {
     const { codigoPost } = req.params
     const query = await pool.query('SELECT * FROM comentario WHERE codigo_post = $1', [codigoPost])
-    res.status(200).json(query.rows)
+    if (query.rowCount === 0) {
+      res.status(404).json({ message: 'Publicación sin comentarios' })
+    } else {
+      res.status(200).json(query.rows)
+    }
   } catch (error) {
     next(error)
     res.status(400).json({ message: 'Error al obtener el contenido' })
@@ -32,7 +36,11 @@ const getAllComentarioUsuario = async (req, res, next) => {
   try {
     const { nombreUsuario } = req.params
     const query = await pool.query('SELECT * FROM comentario WHERE nombre_usuario = $1', [nombreUsuario])
-    res.status(200).json(query.rows)
+    if (query.rowCount === 0) {
+      res.status(404).json({ message: 'Usuario no ha redactado comentarios' })
+    } else {
+      res.status(200).json(query.rows)
+    }
   } catch (error) {
     next(error)
     res.status(400).json({ message: 'Error al obtener el contenido' })
