@@ -4,7 +4,6 @@ import Button from '@mui/material/Button'
 import Card from '@mui/material/Card'
 import CardActions from '@mui/material/CardActions'
 import CardContent from '@mui/material/CardContent'
-import CardMedia from '@mui/material/CardMedia'
 import Typography from '@mui/material/Typography'
 import Modal from '@mui/material/Modal'
 import Stack from '@mui/material/Stack'
@@ -26,12 +25,37 @@ export default function Index () {
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
 
+  const [open2, setOpen2] = React.useState(false)
+  const handleOpen2 = () => setOpen2(true)
+  const handleClose2 = () => setOpen2(false)
+
+  const [open3, setOpen3] = React.useState(false)
+  const handleOpen3 = () => setOpen3(true)
+  const handleClose3 = () => setOpen3(false)
+
+  const [open4, setOpen4] = React.useState(false)
+  const handleOpen4 = () => setOpen4(true)
+  const handleClose4 = () => setOpen4(false)
+
   return (
     <Box>RECETAS<br /><br />
-    <Button color="success" variant="contained">Agregar</Button><br /><br />
+    <Button onClick={handleOpen2} color="success" variant="contained">Agregar</Button><br /><br />
+    <Modal
+  open={open2}
+  onClose={handleClose2}
+  aria-labelledby="modal-modal-title"
+  aria-describedby="modal-modal-description"
+>
+  <Box sx={style}>
+    <Typography id="modal-modal-title" variant="h6" component="h2">
+      AGREGAR
+    </Typography>
+    <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+      AQUI SE AGREGA
+    </Typography>
+  </Box>
+</Modal>
     <Card sx={{ maxWidth: 345 }}>
-      <CardMedia
-      />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
           Queque de nuez
@@ -61,8 +85,38 @@ export default function Index () {
       <br></br>
       <br></br>
       <Stack direction="row" spacing={2}>
-      <Button color='secondary' variant='contained'>MODIFICAR</Button>
-      <Button color="error" variant='contained' >ELIMINAR</Button>
+      <Button onClick={handleOpen3} color='secondary' variant='contained'>MODIFICAR</Button>
+      <Modal
+  open={open3}
+  onClose={handleClose3}
+  aria-labelledby="modal-modal-title"
+  aria-describedby="modal-modal-description"
+>
+  <Box sx={style}>
+    <Typography id="modal-modal-title" variant="h6" component="h2">
+      MODIFICAR
+    </Typography>
+    <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+      AQUI SE MODIFICA
+    </Typography>
+  </Box>
+</Modal>
+      <Button onClick={handleOpen4} color="error" variant='contained' >ELIMINAR</Button>
+      <Modal
+  open={open4}
+  onClose={handleClose4}
+  aria-labelledby="modal-modal-title"
+  aria-describedby="modal-modal-description"
+>
+  <Box sx={style}>
+    <Typography id="modal-modal-title" variant="h6" component="h2">
+      ELIMINAR
+    </Typography>
+    <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+      AQUI SE ELIMINA
+    </Typography>
+  </Box>
+</Modal>
     </Stack>
     </div>
       </CardActions>
