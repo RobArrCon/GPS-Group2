@@ -10,19 +10,24 @@ import Stack from '@mui/material/Stack'
 import TextField from '@mui/material/TextField'
 import BackGround from '../components/GeneralBackground'
 import Swal from 'sweetalert2'
-import TextareaAutosize from '@mui/base/TextareaAutosize'
-import { styled } from '@mui/system'
 
 const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 400,
-  bgcolor: 'background.paper',
-  border: '2px solid #000',
-  boxShadow: 24,
-  p: 4
+  box: {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    height: 700,
+    width: 700,
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
+    boxShadow: 24,
+    p: 4
+  },
+  text: {
+    width: '100%'
+  }
+
 }
 
 export default function Index() {
@@ -60,133 +65,119 @@ export default function Index() {
     }
   }
 
-  const blue = {
-    100: '#DAECFF',
-    200: '#b6daff',
-    400: '#3399FF',
-    500: '#007FFF',
-    600: '#0072E5',
-    900: '#003A75'
-  }
-
-  const grey = {
-    50: '#f6f8fa',
-    100: '#eaeef2',
-    200: '#d0d7de',
-    300: '#afb8c1',
-    400: '#8c959f',
-    500: '#6e7781',
-    600: '#57606a',
-    700: '#424a53',
-    800: '#32383f',
-    900: '#24292f'
-  }
-
-  const StyledTextarea = styled(TextareaAutosize)(
-    ({ theme }) => `
-    width: 320px;
-    font-family: IBM Plex Sans, sans-serif;
-    font-size: 0.875rem;
-    font-weight: 400;
-    line-height: 1.5;
-    padding: 12px;
-    border-radius: 12px;
-    color: ${theme.palette.mode === 'dark' ? grey[300] : grey[900]};
-    background: ${theme.palette.mode === 'dark' ? grey[900] : '#fff'};
-    border: 1px solid ${theme.palette.mode === 'dark' ? grey[700] : grey[200]};
-    box-shadow: 0px 2px 2px ${theme.palette.mode === 'dark' ? grey[900] : grey[50]};
-  
-    &:hover {
-      border-color: ${blue[400]};
-    }
-  
-    &:focus {
-      border-color: ${blue[400]};
-      box-shadow: 0 0 0 3px ${theme.palette.mode === 'dark' ? blue[500] : blue[200]};
-    }
-  
-    // firefox
-    &:focus-visible {
-      outline: 0;
-    }
-  `
-  )
-
   return (
     <BackGround>
-      <Box>RECETAS<br /><br />
-        <Button onClick={handleOpen2} color="success" variant="contained">Agregar</Button><br /><br />
-        <Modal
-          size="xl"
-          open={open2}
-          onClose={handleClose2}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-        >
-          <Box sx={style}>
+      <div>
+        <Typography align='center' id="titulo-pag-receta" variant="h4">
+          RECETAS
+        </Typography>
+        <div align='right'>
+          <Button onClick={handleOpen2} color="success" variant="contained">Agregar</Button><br /><br />
+        </div>
+      </div>
+      <Modal
+        open={open2}
+        onClose={handleClose2}
+        aria-labelledby="modal-modal-title"
+      >
+        <Box sx={style.box}>
+          <div align="center">
             <Typography id="modal-modal-title" variant="h6" component="h2">
               AGREGAR
             </Typography>
-            <TextField id="standard-basic" label="Nombre de la receta" variant="standard" /><br /><br />
-            <StyledTextarea aria-label="empty textarea" placeholder="Preparacion..." /><br /><br />
-            <Stack direction="row" spacing={2}>
-              <Button color="success" variant="contained">Agregar</Button>
-              <Button color="success" onClick={handleClose2} variant="contained">Cancelar</Button><br /><br />
-            </Stack>
-          </Box>
-        </Modal>
-        <Card sx={{ maxWidth: 235 }}>
-          <CardContent>
+          </div>
+          <TextField sx={style.text} id="standard-basic" label="Nombre receta" variant="standard" /><br /><br />
+          <TextField
+            sx={style.text}
+            id="filled-multiline-flexible"
+            label="Preparacion"
+            multiline
+            minRows={10}
+            maxRows={20}
+            variant="filled"
+          /><br /><br />
+          <div align="center">
+            <Button color="success" variant="contained">Agregar</Button>
+            <Button color="error" onClick={handleClose2} variant="contained">Cancelar</Button>
+          </div>
+        </Box>
+      </Modal>
+      <Card sx={{ maxWidth: 235 }}>
+        <CardContent>
+          <div align='center'>
             <Typography gutterBottom variant="h5" component="div">
               Queque de nuez
             </Typography>
-          </CardContent>
-          <CardActions>
-            <div>
+          </div>
+        </CardContent>
+        <CardActions>
+          <div>
+            <div align='center'>
               <Button variant='contained' onClick={handleOpen}>VER</Button>
-              <Modal
-                open={open}
-                onClose={handleClose}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-              >
-                <Box sx={style}>
+            </div>
+            <Modal
+              open={open}
+              onClose={handleClose}
+              aria-labelledby="modal-modal-title"
+              aria-describedby="modal-modal-description"
+            >
+              <Box sx={style.box}>
+                <div align='right'>
+                  <Button color="error" onClick={handleClose} variant="contained">X</Button>
+                </div>
+                <div align="center">
                   <Typography id="modal-modal-title" variant="h6" component="h2">
                     Queque de nuez
-                  </Typography>
-                  <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                    como se prepara
-                  </Typography>
-                </Box>
-              </Modal>
-              <br></br>
-              <br></br>
-              <Stack direction="row" spacing={2}>
-                <Button onClick={handleOpen3} color='secondary' variant='contained'>MODIFICAR</Button>
-                <Modal
-                  open={open3}
-                  onClose={handleClose3}
-                  aria-labelledby="modal-modal-title"
-                  aria-describedby="modal-modal-description"
-                >
-                  <Box sx={style}>
+                  </Typography><br></br>
+                  <TextField
+                    sx={style.text}
+                    id="filled-read-only-input"
+                    label="Preparacion"
+                    defaultValue="asi se prepara esto"
+                    InputProps={{
+                      readOnly: true
+                    }}
+                    variant="filled"
+                  />
+                </div>
+              </Box>
+            </Modal>
+            <br></br>
+            <br></br>
+            <Stack direction="row" spacing={2}>
+              <Button onClick={handleOpen3} color='secondary' variant='contained'>MODIFICAR</Button>
+              <Modal
+                open={open3}
+                onClose={handleClose3}
+                aria-labelledby="modal-modal-title"
+              >
+                <Box sx={style.box}>
+                  <div align="center">
                     <Typography id="modal-modal-title" variant="h6" component="h2">
                       MODIFICAR
                     </Typography>
-                    <TextField id="standard-basic" label="Nombre de la receta" variant="standard" /><br /><br />
-                    <StyledTextarea aria-label="empty textarea" placeholder="Preparacion..." /><br /><br />
-                    <Stack direction="row" spacing={2}>
-                      <Button color="success" variant="contained">Guardar</Button>
-                      <Button color="success" onClick={handleClose3} variant="contained">Cancelar</Button><br /><br />
-                    </Stack>
-                  </Box>
-                </Modal>
-                <Button onClick={() => { handleOpen4(); ConfirmDelete() }} color="error" variant='contained' >ELIMINAR</Button>
-              </Stack>
-            </div>
-          </CardActions>
-        </Card>
-      </Box>
-    </BackGround>
+                  </div>
+                  <TextField sx={style.text} id="standard-basic" label="Nombre receta" variant="standard" /><br /><br />
+                  <TextField
+                    sx={style.text}
+                    id="filled-multiline-flexible"
+                    label="Preparacion"
+                    multiline
+                    minRows={10}
+                    maxRows={20}
+                    variant="filled"
+                  /><br /><br />
+                  <div align="center">
+                    <Button color="success" variant="contained">Guardar</Button>
+                    <Button color="error" onClick={handleClose3} variant="contained">Cancelar</Button>
+                  </div>
+                </Box>
+              </Modal>
+              <Button onClick={() => { handleOpen4(); ConfirmDelete() }} color="error" variant='contained' >ELIMINAR</Button>
+            </Stack>
+          </div>
+        </CardActions>
+      </Card>
+    </BackGround >
   )
 }
