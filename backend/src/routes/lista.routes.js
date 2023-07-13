@@ -5,7 +5,7 @@ const { validateLista, validateListaFav } = require('../validators/listaValidato
 const router = Router()
 
 router.post('/lista', validateLista, createLista)
-router.post('/lista/fav', validateListaFav, createListaFav)
+router.post('/lista/fav/:nombreUsuario', validateListaFav, createListaFav)
 router.post('/lista/item', addToLista)
 router.get('/lista/fav/:nombreUsuario', getListaFavUsuario)
 router.get('/lista/productos/:codigoLista', getProductosLista)
