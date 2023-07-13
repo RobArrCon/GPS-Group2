@@ -1,5 +1,5 @@
 const { Router } = require('express')
-const { createLista, createListaFav, addToLista, getListaFavUsuario, getProductosLista, deleteFromLista, getAllListasUsuario, getAllListas, getOneLista, deleteLista } = require('../controllers/lista.controller')
+const { createLista, createListaFav, addToLista, getListaFavUsuario, getProductosLista, deleteFromLista, getAllListasUsuario, getAllListas, getOneLista, deleteLista, getCodigoLista } = require('../controllers/lista.controller')
 const { validateLista, validateListaFav } = require('../validators/listaValidator')
 
 const router = Router()
@@ -12,6 +12,7 @@ router.get('/lista/productos/:codigoLista', getProductosLista)
 router.get('/listas/:nombreUsuario', getAllListasUsuario)
 router.get('/listas', getAllListas)
 router.get('/lista/:codigoLista', getOneLista)
+router.get('/lista/codigo/:nombreLista', getCodigoLista)
 router.delete('/lista/delete/:codigoLista', deleteLista)
 router.delete('/lista/deleteProducto', deleteFromLista)
 
