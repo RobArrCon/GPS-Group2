@@ -68,7 +68,7 @@ const deleteFromLista = async (req, res, next) => {
 
 const createListaFav = async (req, res, next) => {
   try {
-    const { nombreUsuario } = req.body
+    const { nombreUsuario } = req.params
     const query0 = await pool.query('SELECT * FROM usuario WHERE nombre_usuario = $1', [nombreUsuario])
     if (query0.rowCount) {
       res.status(404).json({ message: 'Usuario no existe' })
