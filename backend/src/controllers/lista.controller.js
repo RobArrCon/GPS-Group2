@@ -68,13 +68,13 @@ const deleteFromLista = async (req, res, next) => {
 
 const createListaFav = async (req, res, next) => {
   try {
-    const { nombreUsuario } = req.params
+    const { nombreUsuario } = req.body
     const query0 = await pool.query('SELECT * FROM usuario WHERE nombre_usuario = $1', [nombreUsuario])
     if (query0.rowCount === 0) {
       res.status(404).json({ message: 'Usuario no existe' })
     } else {
       const query1 = await pool.query('SELECT * FROM listaCompra WHERE nombre_usuario = $1 AND nombre_lista = $2', [nombreUsuario, 'Favoritos'])
-      if (query1.rowCount === 0) {
+      if (query1.rowCount > 0) {
         res.status(302).json({ message: 'Lista ya existe' })
       } else {
         const query = await pool.query('INSERT INTO listaCompra (nombre_lista, nombre_usuario) VALUES($1,$2) RETURNING *',
