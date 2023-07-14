@@ -31,7 +31,7 @@ const getAllCategorias = async (req, res, next) => {
 
 const getOneCategoria = async (req, res, next) => {
   try {
-    const { nombreCategoria } = req.params
+    /*const { nombreCategoria } = req.params*/
     const query = await pool.query('SELECT * FROM categoria WHERE nombre_categoria = $1', [nombreCategoria])
     if (query.rowCount === 0) {
       return res.status(404).json({ message: 'Categoría no encontrada' })

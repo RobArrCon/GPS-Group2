@@ -4,13 +4,19 @@ const bcrypt = require('bcryptjs')
 const createUsuario = async (req, res, next) => {
   try {
     const { usuario, correo, contrasena, rol } = req.body
-    const salt = await bcrypt.genSalt(10)
-    const hash = await bcrypt.hash(contrasena, salt)
-    const query = await pool.query('INSERT INTO usuario (nombre_usuario,correo,clave_user,rol_user) VALUES($1,$2,$3,$4) RETURNING *',
-      [usuario, correo, hash, rol])
 
-    console.log(query)
-    res.status(200).json(query.rows[0])
+    const query = await pool.query('SELECT * FROM usuario WHERE nombre_usuario= $1', [usuario])
+
+    if (query.rowCount === 0) {
+      const salt = await bcrypt.genSalt(10)
+      const hash = await bcrypt.hash(contrasena, salt)
+      const query1 = await pool.query('INSERT INTO usuario (nombre_usuario,correo,clave_user,rol_user) VALUES($1,$2,$3,$4) RETURNING *',
+        [usuario, correo, hash, rol])
+
+      res.status(200).json(query1.rows[0])
+    } else {
+      res.status(302).json({ message: 'El nombre de ususario ya se encuentra en uso' })
+    }
   } catch (error) {
     next(error)
     res.status(400).json({ message: 'No se pudo ingresar el usuario en la base de datos' })
