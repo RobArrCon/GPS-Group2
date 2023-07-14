@@ -2,9 +2,11 @@ const pool = require('../db')
 
 const createProducto = async (req, res, next) => {
   try {
-    const { nombreProducto, descripcionProducto, informacionNutricionalProducto } = req.body
-    const query = await pool.query('INSERT INTO producto ( nombre_producto, descripcion_producto, informacion_nutricional) VALUES($1,$2,$3,$4) RETURNING *',
-      [ nombreProducto, descripcionProducto, informacionNutricionalProducto])
+
+    const { nombreProducto, descripcionProducto, informacionNutricionalProducto, nombreCategoria } = req.body
+    const query = await pool.query('INSERT INTO producto ( nombre_producto, descripcion_producto, informacion_nutricional, nombre_categoria) VALUES($1,$2,$3,$4) RETURNING *',
+      [nombreProducto, descripcionProducto, informacionNutricionalProducto, nombreCategoria])
+
     res.status(200).json(query.rows[0])
   } catch (error) {
     next(error)
