@@ -70,16 +70,18 @@ const createListaFav = async (req, res, next) => {
   try {
     const { nombreUsuario } = req.body
     const query0 = await pool.query('SELECT * FROM usuario WHERE nombre_usuario = $1', [nombreUsuario])
-    if (query0.rowCount) {
+    if (query0.rowCount === 0) {
       res.status(404).json({ message: 'Usuario no existe' })
+    } else {
+      const query1 = await pool.query('SELECT * FROM listaCompra WHERE nombre_usuario = $1 AND nombre_lista = $2', [nombreUsuario, 'Favoritos'])
+      if (query1.rowCount > 0) {
+        res.status(302).json({ message: 'Lista ya existe' })
+      } else {
+        const query = await pool.query('INSERT INTO listaCompra (nombre_lista, nombre_usuario) VALUES($1,$2) RETURNING *',
+          ['Favoritos', nombreUsuario])
+        res.status(200).json(query.rows[0])
+      }
     }
-    const query1 = await pool.query('SELECT * FROM listaCompra WHERE nombre_usuario = $1 AND nombre_lista = $2', [nombreUsuario, 'Favoritos'])
-    if (query1.rowCount === 0) {
-      res.status(302).json({ message: 'Lista ya existe' })
-    }
-    const query = await pool.query('INSERT INTO listaCompra (nombre_lista, nombre_usuario) VALUES($1,$2) RETURNING *',
-      ['Favoritos', nombreUsuario])
-    res.status(200).json(query.rows[0])
   } catch (error) {
     next(error)
     res.status(400).json({ message: 'No es posible crear la lista' })
@@ -118,7 +120,7 @@ const getAllListas = async (req, res, next) => {
 const getListaFavUsuario = async (req, res, next) => {
   try {
     const { nombreUsuario } = req.params
-    const query = await pool.query('SELECT codigo_producto FROM listaCompra L JOIN Producto_IN_ListaCompra P ON L.codigo_lista = P.codigo_lista WHERE nombre_usuario = $1 AND nombre_lista = $2  ',
+    const query = await pool.query('SELECT * FROM listaCompra L JOIN Producto_IN_ListaCompra P ON L.codigo_lista = P.codigo_lista WHERE nombre_usuario = $1 AND nombre_lista = $2  ',
       [nombreUsuario, 'Favoritos'])
     if (query.rowCount === 0) {
       req.status(404).json({ message: 'Lista no existe' })
@@ -134,12 +136,8 @@ const getListaFavUsuario = async (req, res, next) => {
 const getProductosLista = async (req, res, next) => {
   try {
     const { codigoLista } = req.params
-    const query = await pool.query('SELECT * FROM Producto_IN_ListaCompra WHERE codigo_lista = $1', [codigoLista])
-    if (query.rowCount === 0) {
-      res.status(404).json({ message: 'No existen productos en lista' })
-    } else {
-      res.status(200).json(query.rows)
-    }
+    const query = await pool.query('SELECT * FROM Producto_IN_ListaCompra P JOIN Producto Pr ON P.codigo_producto = Pr.codigo_producto WHERE codigo_lista = $1', [codigoLista])
+    res.status(200).json(query.rows)
   } catch (error) {
     next(error)
     res.status(400).json({ message: 'Error al obtener el contenido' })
@@ -150,6 +148,21 @@ const getOneLista = async (req, res, next) => {
   try {
     const { codigoLista } = req.params
     const query = await pool.query('SELECT * FROM listaCompra WHERE codigo_lista = $1', [codigoLista])
+    if (query.rowCount === 0) {
+      res.status(404).json({ message: 'Lista no encontrada' })
+    } else {
+      res.status(200).json(query.rows[0])
+    }
+  } catch (error) {
+    next(error)
+    res.status(400).json({ message: 'Lista no encontrada' })
+  }
+}
+
+const getCodigoLista = async (req, res, next) => {
+  try {
+    const { nombreLista } = req.params
+    const query = await pool.query('SELECT * FROM listaCompra WHERE nombre_lista = $1', [nombreLista])
     if (query.rowCount === 0) {
       res.status(404).json({ message: 'Lista no encontrada' })
     } else {
@@ -185,6 +198,7 @@ module.exports = {
   getOneLista,
   getListaFavUsuario,
   getProductosLista,
+  getCodigoLista,
   deleteLista,
   deleteFromLista
 }

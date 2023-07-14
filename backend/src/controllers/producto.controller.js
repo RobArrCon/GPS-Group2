@@ -2,9 +2,9 @@ const pool = require('../db')
 
 const createProducto = async (req, res, next) => {
   try {
-    const { codigoProducto, nombreProducto, descripcionProducto, informacionNutricionalProducto, codigoCategoria } = req.body
-    const query = await pool.query('INSERT INTO producto (codigo_producto, nombre_producto, descripcion_producto, informacion_nutricional, codigo_categoria) VALUES($1,$2,$3,$4,$5) RETURNING *',
-      [codigoProducto, nombreProducto, descripcionProducto, informacionNutricionalProducto, codigoCategoria])
+    const { codigoProducto, nombreProducto, descripcionProducto, informacionNutricionalProducto } = req.body
+    const query = await pool.query('INSERT INTO producto (codigo_producto, nombre_producto, descripcion_producto, informacion_nutricional) VALUES($1,$2,$3,$4,$5) RETURNING *',
+      [codigoProducto, nombreProducto, descripcionProducto, informacionNutricionalProducto])
     res.status(200).json(query.rows[0])
   } catch (error) {
     next(error)
@@ -92,10 +92,10 @@ const petitionProducto = async (req, res, next) => {
 
 const classifyProducto = async (req, res, next) => {
   try {
-    const { codigoProducto, codigoCategoria } = req.body
+    const { codigoProducto, nombreCategoria } = req.body
 
-    const query = await pool.query('UPDATE producto SET codigo_categoria = $1 WHERE codigo_producto = $2 RETURNING *',
-      [codigoCategoria, codigoProducto])
+    const query = await pool.query('UPDATE producto SET nombre_categoria = $1 WHERE codigo_producto = $2 RETURNING *',
+      [nombreCategoria, codigoProducto])
     res.status(200).json(query.rows[0])
   } catch (error) {
     next(error)
