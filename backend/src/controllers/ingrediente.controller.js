@@ -2,11 +2,11 @@ const pool = require('../db')
 
 const createIngrediente = async (req, res, next) => {
   try {
-    const { nombre, descripcion } = req.body
+    const { nombre, categoriaIngrediente } = req.body
 
-    const query = await pool.query('INSERT INTO ingrediente (nombre_ingrediente,descripcion_ingrediente) VALUES($1,$2) RETURNING *',
+    const query = await pool.query('INSERT INTO ingrediente (nombre_ingrediente,categoria_ingrediente) VALUES($1,$2) RETURNING *',
 
-      [nombre, descripcion])
+      [nombre, categoriaIngrediente])
     res.status(200).json(query.rows[0])
   } catch (error) {
     next(error)
@@ -51,12 +51,12 @@ const deleteIngrediente = async (req, res, next) => {
 
 const updateIngrediente = async (req, res, next) => {
   try {
-    const { codigo, nombre, descripcion } = req.body
+    const { codigo, nombre, categoriaIngrediente } = req.body
     const query = await pool.query(
 
-      'UPDATE ingrediente SET nombre_ingrediente = $2, descripcion_ingrediente = $3 WHERE codigo_ingrediente = $1 RETURNING *',
+      'UPDATE ingrediente SET nombre_ingrediente = $2, categoria_ingrediente = $3 WHERE codigo_ingrediente = $1 RETURNING *',
 
-      [codigo, nombre, descripcion])
+      [codigo, nombre, categoriaIngrediente])
     if (query.rowCount === 0) {
       return res.status(404).json({ message: 'Ingrediente no encontrado' })
     }
