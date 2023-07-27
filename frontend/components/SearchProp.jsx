@@ -5,7 +5,7 @@ import { TextField, MenuList, MenuItem, Typography } from '@mui/material'
 const SearchBarProp = (props) => {
   const options = props.items
   const listRef = useRef(null)
-  const [inputValue, setInputValue] = useState('')
+  const [inputValue, setInputValue] = useState(props.default)
   const [isMatched, setMatched] = useState([])
   const [count, setCount] = useState(0)
   const [isOpen, setOpen] = useState(false)
@@ -63,6 +63,7 @@ const SearchBarProp = (props) => {
         onBlur={handleBlur}
         sx={{ backgroundColor: 'white' }}
       />
+     {/*
       {inputValue !== '' && isMatched.length > 0
         ? (
         <MenuList role="listbox" ref={listRef} sx={{ backgroundColor: 'white' }}>
@@ -88,6 +89,7 @@ const SearchBarProp = (props) => {
         </MenuList>
             )
           : null}
+        */}
     </>
   )
 }

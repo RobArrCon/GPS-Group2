@@ -1,0 +1,50 @@
+[
+    {   "codigo_producto": "1",
+        "nombre_producto": "papas",
+        "descripcion_producto": "papas fritas marca lays",
+        "informacion_nutricional": "Porcion:25g, Energía(kcal):541, Proteínas(g):6,43",
+        "nombre_categoria": "snacks"
+    },
+    {   "codigo_producto": "2",
+        "nombre_producto": "helado",
+        "descripcion_producto": "helado marca notco",
+        "informacion_nutricional": "Porcion:25g, Energía(kcal):541, Proteínas(g):6,43",
+        "nombre_categoria": "congelados"
+    },
+    {   "codigo_producto": "3",
+        "nombre_producto": "bebida",
+        "descripcion_producto": "sprite marca cocacola",
+        "informacion_nutricional": "Porcion:25g, Energía(kcal):541, Proteínas(g):6,43",
+        "nombre_categoria": "bebestibles"
+    },
+    {   "codigo_producto": "4",
+        "nombre_producto": "pan",
+        "descripcion_producto": "pan marca santa isabel",
+        "informacion_nutricional": "Porcion:25g, Energía(kcal):541, Proteínas(g):6,43",
+        "nombre_categoria": "panaderia"
+    },
+    {   "codigo_producto": "5",
+        "nombre_producto": "queso",
+        "descripcion_producto": "queso marca notco",
+        "informacion_nutricional": "Porcion:25g, Energía(kcal):541, Proteínas(g):6,43",
+        "nombre_categoria": "embutidos"
+    },
+    {   "codigo_producto": "6",
+        "nombre_producto": "queso añejado",
+        "descripcion_producto": "queso añejado marca notco",
+        "informacion_nutricional": "Porcion:25g, Energía(kcal):541, Proteínas(g):6,43",
+        "nombre_categoria": "embutidos"
+    },
+    {   "codigo_producto": "7",
+        "nombre_producto": "avena",
+        "descripcion_producto": "avena marca quaker",
+        "informacion_nutricional": "Porcion:25g, Energía(kcal):541, Proteínas(g):6,43",
+        "nombre_categoria": "cereales"
+    },
+    {   "codigo_producto": "8",
+        "nombre_producto": "galletas rellenas",
+        "descripcion_producto": "galletas rellenas marca oreo",
+        "informacion_nutricional": "Porcion:25g, Energía(kcal):541, Proteínas(g):6,43",
+        "nombre_categoria": "galletas"
+    }
+]
