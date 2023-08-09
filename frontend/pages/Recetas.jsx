@@ -41,7 +41,7 @@ export default function Receta () {
   const [open2, setOpen2] = React.useState(false)
   const handleOpen2 = () => setOpen2(true)
   const handleClose2 = () => {
-    setAgregar(() => ({ ...agregar, nombreReceta: '', nombreUsuario: '', preparacion: '' }))
+    setAgregar(() => ({ ...agregar, nombreReceta: '', preparacion: '' }))
     setError('')
     setOpen2(false)
   }
