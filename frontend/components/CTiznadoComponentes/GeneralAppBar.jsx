@@ -15,7 +15,7 @@ import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
 import { useRouter } from 'next/router'
 const drawerWidth = 240
-const navItems = ['Inicio', 'Productos', 'Recetas', 'Listas', 'Publicaciones']
+const navItems = ['Home', 'Productos', 'Recetas', 'Listas', 'Publicaciones']
 
 function DrawerAppBar () {
   const [mobileOpen, setMobileOpen] = React.useState(false)

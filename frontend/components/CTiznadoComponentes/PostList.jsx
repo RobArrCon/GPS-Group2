@@ -46,7 +46,7 @@ const PostList = ({ publicacion, comentarios, onClose }) => {
   const enviarComentario = async () => {
     values.detalleComentario = comentarioText
     values.codigoPost = publicacion.codigo_post
-    values.nombreUsuario = localStorage.getItem('nombreUsuario')
+    values.nombreUsuario = localStorage.getItem('usuario')
     try {
       const response = await axios.post(`${process.env.API_URL}/comentario`, values)
       if (response.status === 200) {

@@ -4,9 +4,9 @@ import sweet from 'sweetalert2'
 import { Grid, Typography, Box, TextField, Link, Avatar } from '@mui/material'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import MyBackground2 from '../components/Background-2.jsx'
-import MyButton from '../components/Button.jsx'
-import ImagenV from '../components/Vaquita.jsx'
+import MyBackground2 from '../components/LorellanaComponents/Background-2.jsx'
+import MyButton from '../components/LorellanaComponents/Button.jsx'
+import ImagenV from '../components/LorellanaComponents/Vaquita.jsx'
 
 const Login = () => {
   const router = useRouter()

@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 import NoteAltIcon from '@mui/icons-material/NoteAlt'
 import MyButton from '../components/LorellanaComponents/myButton'
-import MyGeneralBackground from '../components/LorellanaComponents/GeneralBackground'
-import { Grid } from '@mui/material'
+import MyGeneralBackground from '../components/CTiznadoComponentes/GeneralBackground'
+import { Grid, Button } from '@mui/material'
 import SearchBar2 from '../components/LorellanaComponents/search2'
 import axios from 'axios'
 import MyAvatar3 from '../components/LorellanaComponents/avatar3'
@@ -41,6 +41,14 @@ const Home = () => {
     })
   }
 
+  const handleCategoryClick = (categoryName) => {
+    console.log('Clicked on category:', categoryName)
+    router.push({
+      pathname: '/Productos',
+      query: { nombreCategoria: categoryName }
+    })
+  }
+
   useEffect(() => {
     const usuario = localStorage.getItem('usuario')
     console.log('Fetching usuario:', usuario)
@@ -70,75 +78,207 @@ const Home = () => {
       >
         <Grid item style={{ alignItems: 'center' }}
 >
-          <MyButton
-            margin={2}
-            text="Bebidas Vegetales"
-            imageSource={'Bebidas.jpg'}
+<Button
+          style={{
+            color: 'white',
+            backgroundColor: '#4a732b',
+            width: '200px',
+            height: '250px',
+            borderRadius: '8px',
+            fontSize: '16px',
+            padding: '8px',
+            fontFamily: 'Roboto',
+            fontWeight: 'bold',
+            boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.25)',
+            transition: 'background-color 0.3s',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            cursor: 'pointer'
+          }}
+          onClick={() => handleCategoryClick('Bebidas Vegetales')}
+        >
+          <img
+            src={'bebidas.jpg'}
+            alt="Bebidas Vegetales"
+            style={{ width: '100%', height: '100%' }}
+          />
+          <span>Bebidas Vegetales</span>
+        </Button>
+        </Grid>
+        <Grid item>
+        <Button
+          style={{
+            color: 'white',
+            backgroundColor: '#4a732b',
+            width: '200px',
+            height: '250px',
+            borderRadius: '8px',
+            fontSize: '16px',
+            padding: '8px',
+            fontFamily: 'Roboto',
+            fontWeight: 'bold',
+            boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.25)',
+            transition: 'background-color 0.3s',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            cursor: 'pointer'
+          }}
+          onClick={() => handleCategoryClick('Cereales')}
+        >
+          <img
+            src={'cereales.jpg'}
+            alt="Cereales"
+            style={{ width: '100%', height: '90%' }}
+          />
+          <span>Cereales</span>
+        </Button>
+        </Grid>
+        <Grid item>
+        <Button
             style={{
-              font: 'impact',
               color: 'white',
-              textShadow: '1px 1px 2px black'
+              backgroundColor: '#4a732b',
+              width: '200px',
+              height: '250px',
+              borderRadius: '8px',
+              fontSize: '16px',
+              padding: '8px',
+              fontFamily: 'Roboto',
+              fontWeight: 'bold',
+              boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.25)',
+              transition: 'background-color 0.3s',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              cursor: 'pointer'
             }}
-            underlinestartIcon={<NoteAltIcon />}
-            variant="contained"
-            color="primary"
-          ></MyButton>
+            onClick={() => handleCategoryClick('Comidas congeladas')}
+          >
+            <img
+              src={'congelados.jpg'}
+              alt="Comidas congeladas"
+              style={{ width: '100%', height: '100%' }}
+            />
+            <span>Comidas congeladas</span>
+          </Button>
         </Grid>
         <Grid item>
-          <MyButton
-            margin={2}
-            text="Cereales"
-            style={{ border: '1px solid white' }}
-            imageSource={'cereales.jpg'}
-            startIcon={<NoteAltIcon />}
-            variant="contained"
-            color="primary"
-          ></MyButton>
+        <Button
+            style={{
+              color: 'white',
+              backgroundColor: '#4a732b',
+              width: '200px',
+              height: '250px',
+              borderRadius: '8px',
+              fontSize: '16px',
+              padding: '8px',
+              fontFamily: 'Roboto',
+              fontWeight: 'bold',
+              boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.25)',
+              transition: 'background-color 0.3s',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              cursor: 'pointer'
+            }}
+            onClick={() => handleCategoryClick('Despensa')}
+          >
+            <img
+              src={'despensa.jpg'}
+              alt="Despensa"
+              style={{ width: '100%', height: '100%' }}
+            />
+            <span>Despensa</span>
+          </Button>
         </Grid>
         <Grid item>
-          <MyButton
-            text="Comidas congeladas"
-            imageSource={'congelados.jpg'}
-            startIcon={<NoteAltIcon />}
-            variant="contained"
-            color="primary"
-          ></MyButton>
+        <Button
+            style={{
+              color: 'white',
+              backgroundColor: '#4a732b',
+              width: '200px',
+              height: '250px',
+              borderRadius: '8px',
+              fontSize: '16px',
+              padding: '8px',
+              fontFamily: 'Roboto',
+              fontWeight: 'bold',
+              boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.25)',
+              transition: 'background-color 0.3s',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              cursor: 'pointer'
+            }}
+            onClick={() => handleCategoryClick('Dulces y Snacks')}
+          >
+            <img
+              src={'galletas.jpg'}
+              alt="Dulces y Snacks"
+              style={{ width: '100%', height: '100%' }}
+            />
+            <span>Dulces y Snacks</span>
+          </Button>
         </Grid>
         <Grid item>
-          <MyButton
-            text="Despensa"
-            imageSource={'despensa.jpg'}
-            startIcon={<NoteAltIcon />}
-            variant="contained"
-            color="primary"
-          ></MyButton>
+        <Button
+            style={{
+              color: 'white',
+              backgroundColor: '#4a732b',
+              width: '200px',
+              height: '250px',
+              borderRadius: '8px',
+              fontSize: '16px',
+              padding: '8px',
+              fontFamily: 'Roboto',
+              fontWeight: 'bold',
+              boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.25)',
+              transition: 'background-color 0.3s',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              cursor: 'pointer'
+            }}
+            onClick={() => handleCategoryClick('Helados')}
+          >
+            <img
+              src={'helado.jpg'}
+              alt="Helados"
+              style={{ width: '100%', height: '89%' }}
+            />
+            <span>Helados</span>
+          </Button>
         </Grid>
         <Grid item>
-          <MyButton
-            text="Dulces & Snacks"
-            imageSource={'galletas.jpg'}
-            startIcon={<NoteAltIcon />}
-            variant="contained"
-            color="primary"
-          ></MyButton>
-        </Grid>
-        <Grid item>
-          <MyButton
-            text="Helados"
-            imageSource={'helado.jpg'}
-            startIcon={<NoteAltIcon />}
-            variant="contained"
-            color="primary"
-          ></MyButton>
-        </Grid>
-        <Grid item>
-          <MyButton
-            text="Queso & Embutido"
-            imageSource={'queso.jpg'}
-            startIcon={<NoteAltIcon />}
-            variant="contained"
-            color="primary"
-          ></MyButton>
+        <Button
+            style={{
+              color: 'white',
+              backgroundColor: '#4a732b',
+              width: '200px',
+              height: '250px',
+              borderRadius: '8px',
+              fontSize: '16px',
+              padding: '8px',
+              fontFamily: 'Roboto',
+              fontWeight: 'bold',
+              boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.25)',
+              transition: 'background-color 0.3s',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              cursor: 'pointer'
+            }}
+            onClick={() => handleCategoryClick('Quesos y fiambres')}
+          >
+            <img
+              src={'queso.jpg'}
+              alt="Queso y Embutido"
+              style={{ width: '100%', height: '89%' }}
+            />
+            <span>Queso & Embutido</span>
+          </Button>
         </Grid>
       </Grid>
     </MyGeneralBackground>

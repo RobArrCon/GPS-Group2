@@ -2,9 +2,9 @@ import { React, useState, useEffect } from 'react'
 import { Typography, Box, Grid } from '@mui/material'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import MyBackground from '../components/Background.jsx'
-import MyImage from '../components/ImagenInicio.jsx'
-import MyButton from '../components/Button.jsx'
+import MyBackground from '../components/LorellanaComponents/Background.jsx'
+import MyImage from '../components/LorellanaComponents/ImagenInicio.jsx'
+import MyButton from '../components/LorellanaComponents/Button.jsx'
 
 export default function Index () {
   const router = useRouter()

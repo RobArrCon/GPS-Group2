@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import axios from 'axios'
 import { Box, Grid, Card, CardHeader, CardContent, Typography, CardMedia, Button, IconButton } from '@mui/material'
 import Head from 'next/head'
-import MyGeneralBackground from '../components/LorellanaComponents/GeneralBackground.jsx'
+import MyGeneralBackground from '../components/CTiznadoComponentes/GeneralBackground'
 import Comment from '../components/LorellanaComponents/Comment.jsx'
 import AddList from '../components/LorellanaComponents/AddList.jsx'
 
@@ -90,8 +90,10 @@ const Producto = () => {
 
   const indexOfLastOpinion = currentPage * opinionsPerPage
   const indexOfFirstOpinion = indexOfLastOpinion - opinionsPerPage
-  const currentOpinions = opinion.slice(indexOfFirstOpinion, indexOfLastOpinion)
-
+  let currentOpinions
+  if (opinion.length > 0) {
+    currentOpinions = opinion.slice(indexOfFirstOpinion, indexOfLastOpinion)
+  }
   const handleNextPage = () => {
     setCurrentPage((prevPage) => prevPage + 1)
   }
@@ -101,11 +103,12 @@ const Producto = () => {
   }
 
   const showOpiniones = () => {
-    return currentOpinions.map((opinionItem, index) => {
-      const dateParts = opinionItem.fecha_opinion.split('T')[0].split('-')
-      const formattedDate = `${dateParts[2]}/${dateParts[1]}/${dateParts[0]}`
+    if (opinion.length > 0) {
+      return currentOpinions.map((opinionItem, index) => {
+        const dateParts = opinionItem.fecha_opinion.split('T')[0].split('-')
+        const formattedDate = `${dateParts[2]}/${dateParts[1]}/${dateParts[0]}`
 
-      return (
+        return (
         <Card key={index} sx={{ width: '100%', boxShadow: '0 2px 4px 0 rgba(0, 0, 0, 0.2)', borderRadius: '8px', marginTop: '20px' }}>
           <CardContent sx={{ padding: '16px' }}>
             <Typography variant="body1" sx={{ marginBottom: '8px' }}>{opinionItem.nombre_usuario} {formattedDate}</Typography>
@@ -121,8 +124,9 @@ const Producto = () => {
             {opinionItem.detalle_opinion}
           </CardContent>
         </Card>
-      )
-    })
+        )
+      })
+    }
   }
 
   useEffect(() => {
