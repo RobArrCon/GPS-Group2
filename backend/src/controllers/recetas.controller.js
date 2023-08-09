@@ -3,11 +3,6 @@ const pool = require('../db.js')
 const createReceta = async (req, res, next) => {
   try {
     const { nombreReceta, nombreUsuario, preparacion } = req.body
-    const validacion = await pool.query('SELECT * FROM usuario WHERE nombre_usuario = $1', [nombreUsuario])
-    if (validacion.rowCount === 0) {
-      res.status(404).json({ message: 'Autor no se encuentra en la base de datos' })
-      return
-    }
     const query = await pool.query('INSERT INTO receta (nombre_receta, nombre_usuario, preparacion) VALUES($1, $2, $3) RETURNING *',
       [nombreReceta, nombreUsuario, preparacion])
     res.status(200).json(query.rows[0])
@@ -23,6 +18,7 @@ const getAllRecetas = async (req, res, next) => {
     res.status(200).json(query.rows)
   } catch (error) {
     next(error)
+    console.error(error)
     res.status(400).json({ message: 'error al acceder a la tabla de recetas' })
   }
 }
