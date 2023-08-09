@@ -24,6 +24,7 @@ const createLista = async (req, res, next) => {
 const addToLista = async (req, res, next) => {
   try {
     const { codigoProducto, codigoLista } = req.body
+    console.log(codigoProducto, codigoLista)
     const query0 = await pool.query('SELECT * FROM producto WHERE codigo_producto = $1', [codigoProducto])
     if (query0.rowCount === 0) {
       res.status(404).json({ message: 'Producto no existe' })
@@ -84,6 +85,7 @@ const createListaFav = async (req, res, next) => {
       }
     }
   } catch (error) {
+    console.error(error)
     next(error)
     res.status(400).json({ message: 'No es posible crear la lista' })
   }

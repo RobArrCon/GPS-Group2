@@ -2,7 +2,7 @@ const { check } = require('express-validator')
 const { validateResult } = require('../helpers/validateHelper')
 
 const validateOpinion = [
-  check('nombreusuarioopinion').exists().not().isEmpty().withMessage('Debe ingresar un nombre'),
+  check('nombreusuario').exists().not().isEmpty().withMessage('Debe ingresar un nombre'),
   check('codigoproducto').exists().not().isEmpty(), //  .isNumeric(), //matches(/^[A-ZÑa-zñáéíóúÁÉÍÓÚ'°]+$/)
   check('detalleopinion').exists().not().isEmpty().withMessage('Debe ingresar detalle de opinion'),
   check('fechaopinion').exists().not().isEmpty().isDate(),
