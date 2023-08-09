@@ -1,7 +1,7 @@
 import React from 'react'
 import { Box, Container } from '@mui/material'
 import Copyright from './Copyright'
-import GeneralAppBar from '../components/GeneralAppBar'
+import GeneralAppBar from './GeneralAppBar'
 
 const MyGeneralBackground = ({ children }) => {
   return (
