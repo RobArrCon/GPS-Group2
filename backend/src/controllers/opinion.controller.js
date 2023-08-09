@@ -2,11 +2,13 @@ const pool = require('../db')
 
 const createOpinion = async (req, res, next) => {
   try {
-    const { nombreusuarioopinion, codigoproducto, detalleopinion, numvaloracion, fechaopinion } = req.body
+    const { nombreusuario, codigoproducto, detalleopinion, numvaloracion, fechaopinion } = req.body
+    console.log(req.body.nombreusuario)
     const query = await pool.query('INSERT INTO Opinion (nombre_usuario, codigo_producto, detalle_opinion, num_valoracion, fecha_opinion ) VALUES($1,$2,$3,$4,$5) RETURNING *',
-      [nombreusuarioopinion, codigoproducto, detalleopinion, numvaloracion, fechaopinion])
+      [nombreusuario, codigoproducto, detalleopinion, numvaloracion, fechaopinion])
     res.status(200).json(query.rows[0])
   } catch (error) {
+    console.error(error)
     next(error)
     res.status(400).json({ message: 'No se pudo crear tu opinion en la base de datos' })
   }
@@ -26,10 +28,14 @@ const getAllporProducto = async (req, res, next) => {
   try {
     const { codigoproducto } = req.params
     const query = await pool.query('SELECT * FROM Opinion WHERE codigo_producto=$1', [codigoproducto])
-    res.status(200).json(query.rows)
+
+    if (query.rows.length === 0) {
+      res.status(200).json({ message: 'No se encontró ninguna opinión para este código de producto.' })
+    } else {
+      res.status(200).json(query.rows)
+    }
   } catch (error) {
     next(error)
-    res.status(400).json({ message: 'no se se encontro la opinion' })
   }
 }
 

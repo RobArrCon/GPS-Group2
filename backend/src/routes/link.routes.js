@@ -5,7 +5,7 @@ const { validateLink } = require('../validators/linkValidator')
 const router = Router()
 
 router.post('/link', validateLink, createLink)
-router.get('/links', getLinks)
+router.get('/links/:codigoProducto', getLinks)
 router.delete('/link/delete/:link', deleteLink)
 router.delete('/link/delete/:producto', deleteLinksProducto)
 
