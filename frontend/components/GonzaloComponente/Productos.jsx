@@ -83,6 +83,8 @@ const ProductoSearchDisplay = (props) => {
 
   const filtrarCategorias = (event) => {
     setCategoriaValue(event.target.value)
+    //Cambio menor para evitar quedar fuera de rango
+    setPagina(0)
   }
 
   return (
