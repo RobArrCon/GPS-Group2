@@ -14,6 +14,6 @@ router.get('/listas', getAllListas)
 router.get('/lista/:codigoLista', getOneLista)
 router.get('/lista/codigo/:nombreLista', getCodigoLista)
 router.delete('/lista/delete/:codigoLista', deleteLista)
-router.delete('/lista/deleteProducto', deleteFromLista)
+router.delete('/deleteProducto/:codigoLista/:codigoProducto', deleteFromLista)
 
 module.exports = router
