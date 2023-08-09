@@ -100,7 +100,7 @@ const deletePost = async (req, res, next) => {
 
 const getPostsAndComments = async (req, res, next) => {
   try {
-    const query = await pool.query('SELECT p.titulo_post, p.fecha_publicacion, COUNT(c.codigo_comentario) AS cantidad_comentarios FROM Post p LEFT JOIN Comentario c ON p.codigo_post = c.codigo_post GROUP BY p.codigo_post, p.titulo_post, p.fecha_publicacion')
+    const query = await pool.query('SELECT p.codigo_post, p.titulo_post, p.fecha_publicacion, p.detalle_post, COUNT(c.codigo_comentario) AS cantidad_comentarios FROM Post p LEFT JOIN Comentario c ON p.codigo_post = c.codigo_post GROUP BY p.codigo_post, p.titulo_post, p.fecha_publicacion')
     if (query.rowCount === 0) {
       res.status(404).json({ message: 'No existen publicaciones' })
     } else {
