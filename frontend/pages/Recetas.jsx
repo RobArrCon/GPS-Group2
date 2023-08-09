@@ -8,7 +8,7 @@ import Typography from '@mui/material/Typography'
 import Modal from '@mui/material/Modal'
 import Stack from '@mui/material/Stack'
 import TextField from '@mui/material/TextField'
-import BackGround from '../components/robcomponents/GeneralBackground'
+import BackGround from '../components/CTiznadoComponentes/GeneralBackground'
 import Swal from 'sweetalert2'
 import Grid from '@mui/material/Grid'
 import axios from 'axios'
@@ -41,7 +41,7 @@ export default function Receta () {
   const [open2, setOpen2] = React.useState(false)
   const handleOpen2 = () => setOpen2(true)
   const handleClose2 = () => {
-    setAgregar(() => ({ ...agregar, nombreReceta: '', nombreUsuario: '', preparacion: '' }))
+    setAgregar(() => ({ ...agregar, nombreReceta: '', preparacion: '' }))
     setError('')
     setOpen2(false)
   }

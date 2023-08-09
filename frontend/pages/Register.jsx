@@ -11,9 +11,9 @@ import {
   LinearProgress
 } from '@mui/material'
 import Head from 'next/head'
-import MyBackground2 from '../components/Background-2.jsx'
-import MyButton from '../components/Button.jsx'
-import ImagenV from '../components/Vaquita.jsx'
+import MyBackground2 from '../components/LorellanaComponents/Background-2.jsx'
+import MyButton from '../components/LorellanaComponents/Button.jsx'
+import ImagenV from '../components/LorellanaComponents/Vaquita.jsx'
 
 const Register = () => {
   const router = useRouter()
@@ -51,10 +51,7 @@ const Register = () => {
       )
       console.log(response.data)
 
-      const response1 = await axios.post(
-        `${process.env.API_URL}/lista/fav`,
-        { nombreUsuario: values.usuario }
-      )
+      const response1 = await axios.post(`${process.env.API_URL}/lista/fav/${values.usuario}`)
       console.log(response1.data)
 
       sweet.fire({

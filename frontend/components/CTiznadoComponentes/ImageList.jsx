@@ -82,7 +82,8 @@ export default function TitlebarImageList ({ datos, lista }) {
                 src={`${item.img}`}
                 alt={item.title}
                 loading="lazy"
-
+                width={'150'}
+                height={'180'}
               />
             </Button>
 

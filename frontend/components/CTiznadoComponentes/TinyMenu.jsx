@@ -59,7 +59,7 @@ export default function LongMenu ({ onOptionSelect, listas }) {
         } else
         if (result.isConfirmed) {
           values.nombreLista = result.value
-          values.nombreUsuario = localStorage.getItem('nombreUsuario')
+          values.nombreUsuario = localStorage.getItem('usuario')
           createLista()
         }
         break

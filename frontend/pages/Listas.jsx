@@ -10,7 +10,7 @@ export default function ListasUsuario () {
   const nombresListas = []
 
   const getListas = async () => {
-    const response = await axios.get(`${process.env.API_URL}/listas/${localStorage.getItem('nombreUsuario')}`)
+    const response = await axios.get(`${process.env.API_URL}/listas/${localStorage.getItem('usuario')}`)
     setListas(response.data)
   }
 
