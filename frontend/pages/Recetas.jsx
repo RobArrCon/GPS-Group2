@@ -17,8 +17,12 @@ import SearchIcon from '@mui/icons-material/Search'
 export default function Receta () {
   const [isAdmin, setIsAdmin] = useState(false)
 
-  const checkAdminStatus = () => {
-    setIsAdmin(true)
+  const checkAdminStatus = async () => {
+    const response = await axios.get(`${process.env.API_URL}/usuario/${localStorage.getItem('usuario')}`)
+    console.log(response.data.rol_usuario)
+    if (response.data.rol_usuario === 'admin') {
+      setIsAdmin(true)
+    }
   }
 
   const [searchQuery, setSearchQuery] = useState('')
