@@ -2,21 +2,43 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react'
 import { useRouter } from 'next/router'
 import axios from 'axios'
-import { TextField, Typography, Card, CardMedia, CardActionArea, CardContent, Grid, FormControl, InputLabel, Select, MenuItem } from '@mui/material'
+import { TextField, Typography, Card, CardMedia, CardActionArea, CardContent, Grid, FormControl, InputLabel, Select, MenuItem, Button } from '@mui/material'
 import DrawerAppBar from '../CTiznadoComponentes/GeneralAppBar'
 const ProductoSearchDisplay = (props) => {
   const API_URL = process.env.NEXT_PUBLIC_SERVIDOR
   const router = useRouter()
+  const [pagina, setPagina] = useState(0)
   const [productos, setProductos] = useState([])
   const [categorias, setCategorias] = useState([''])
   const [searchValue, setSearchValue] = useState('')
   const [categoriaValue, setCategoriaValue] = useState('')
   const keys = ['nombre_producto', 'nombre_categoria', 'descripcion_producto']
 
+  // Cambio de Paginación solicitado
+  const tempProds = productos.filter((items) => {
+    return keys.some(vars => items[vars].toString().toLowerCase().includes(searchValue.toString().toLowerCase()))
+  }).filter((items) => {
+    return items.nombre_categoria.toString().toLowerCase().includes(categoriaValue.toString().toLowerCase())
+  })
+  const productosVisibles = 5
+  const paginaMaxima = Math.max(Math.ceil(tempProds.length / productosVisibles), 1)
+  const indexInicioProducto = pagina * productosVisibles
+  const indexFinalProducto = indexInicioProducto + productosVisibles
+
+  const paginaSiguiente = () => {
+    setPagina((prevPage) => prevPage + 1)
+  }
+
+  const paginaAnterior = () => {
+    setPagina((prevPage) => prevPage - 1)
+  }
+
   const changeTerm = (event) => {
     setSearchValue(event.target.value)
-    console.log(productos)
+    // reinicia la pagina para evitar problemas de indices
+    setPagina(0)
   }
+
   const loadProductos = async () => {
     try {
       axios.get(`${process.env.API_URL}/productos`)
@@ -71,11 +93,10 @@ const ProductoSearchDisplay = (props) => {
       <br></br>
       <Grid
         container
-        justifyContent='space-around'
+        justifyContent='center'
         spacing={2}
         sx={{
-          marginLeft: '10px',
-          marginRight: '25px'
+          marginRight: '50px'
         }}
       >
         <Grid
@@ -115,6 +136,29 @@ const ProductoSearchDisplay = (props) => {
         </Grid>
       </Grid>
 
+      {/* Botones para realizar la paginación
+      */}
+      <Grid
+        container
+        justifyContent='center'
+        sx = {{
+          padding: '10px',
+          marginUp: '20px'
+        }}
+        spacing={10}
+      >
+
+        <Grid item>
+          <Button onClick={paginaAnterior} variant='contained' disabled={(pagina + 1 <= 1)}> Pagina Previa</Button>
+        </Grid>
+        <Grid item>
+          <Button onClick={paginaSiguiente} variant='contained' disabled={(pagina + 1 >= paginaMaxima)}> Pagina Siguiente</Button>
+        </Grid>
+        <Grid item sx={{ marginUp: '10px' }}>
+          <Typography>Pagina {pagina + 1} de {paginaMaxima}</Typography>
+        </Grid>
+      </Grid>
+
       <Grid
         container
         alignItems='stretch'
@@ -125,11 +169,7 @@ const ProductoSearchDisplay = (props) => {
           paddingTop: '25px'
         }}
       >
-        {productos.filter((items) => {
-          return keys.some(vars => items[vars].toString().toLowerCase().includes(searchValue.toString().toLowerCase()))
-        }).filter((items) => {
-          return items.nombre_categoria.toString().toLowerCase().includes(categoriaValue.toString().toLowerCase())
-        }).map(producto => {
+        {tempProds.slice(indexInicioProducto, indexFinalProducto).map(producto => {
           // eslint-disable-next-line react/jsx-key
           return (<Grid
             item key={producto.codigo_producto}
@@ -174,6 +214,7 @@ const ProductoSearchDisplay = (props) => {
         })
         }
       </Grid>
+
     </>
   )
 }
