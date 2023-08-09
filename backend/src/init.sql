@@ -61,6 +61,7 @@ CREATE TABLE Post (
 );
 
 CREATE TABLE Comentario (
+  codigo_comentario SERIAL NOT NULL,
   nombre_usuario VARCHAR(45) NOT NULL,
   codigo_post INT NOT NULL,
   detalle_comentario TEXT,

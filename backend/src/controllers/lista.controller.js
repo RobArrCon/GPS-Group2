@@ -49,10 +49,11 @@ const addToLista = async (req, res, next) => {
 
 const deleteFromLista = async (req, res, next) => {
   try {
-    const { codigoLista, codigoProducto } = req.body
-    const query0 = await pool.query('SELECT * FROM Producto_IN_ListaCompra WHERE codigo_lista = $1 AND codigo_producto = $2', [codigoLista, codigoProducto])
+    const { codigoLista, codigoProducto } = req.params
+    const query0 = await pool.query('SELECT * FROM Producto_IN_ListaCompra WHERE codigo_lista = $1 AND codigo_producto = $2',
+      [codigoLista, codigoProducto])
     if (query0.rowCount === 0) {
-      res.status(404).json({ message: 'Producto no existe en la lista' })
+      res.status(300).json({ message: 'Producto no existe' })
     }
     const query = await pool.query('DELETE FROM Producto_IN_ListaCompra WHERE codigo_lista = $1 AND codigo_producto = $2',
       [codigoLista, codigoProducto])
@@ -69,7 +70,7 @@ const deleteFromLista = async (req, res, next) => {
 
 const createListaFav = async (req, res, next) => {
   try {
-    const { nombreUsuario } = req.body
+    const { nombreUsuario } = req.params
     const query0 = await pool.query('SELECT * FROM usuario WHERE nombre_usuario = $1', [nombreUsuario])
     if (query0.rowCount === 0) {
       res.status(404).json({ message: 'Usuario no existe' })
@@ -122,7 +123,7 @@ const getAllListas = async (req, res, next) => {
 const getListaFavUsuario = async (req, res, next) => {
   try {
     const { nombreUsuario } = req.params
-    const query = await pool.query('SELECT codigo_producto FROM listaCompra L JOIN Producto_IN_ListaCompra P ON L.codigo_lista = P.codigo_lista WHERE nombre_usuario = $1 AND nombre_lista = $2  ',
+    const query = await pool.query('SELECT * FROM listaCompra L JOIN Producto_IN_ListaCompra P ON L.codigo_lista = P.codigo_lista WHERE nombre_usuario = $1 AND nombre_lista = $2  ',
       [nombreUsuario, 'Favoritos'])
     if (query.rowCount === 0) {
       req.status(404).json({ message: 'Lista no existe' })
@@ -138,12 +139,8 @@ const getListaFavUsuario = async (req, res, next) => {
 const getProductosLista = async (req, res, next) => {
   try {
     const { codigoLista } = req.params
-    const query = await pool.query('SELECT * FROM Producto_IN_ListaCompra WHERE codigo_lista = $1', [codigoLista])
-    if (query.rowCount === 0) {
-      res.status(404).json({ message: 'No existen productos en lista' })
-    } else {
-      res.status(200).json(query.rows)
-    }
+    const query = await pool.query('SELECT * FROM Producto_IN_ListaCompra P JOIN Producto Pr ON P.codigo_producto = Pr.codigo_producto WHERE codigo_lista = $1', [codigoLista])
+    res.status(200).json(query.rows)
   } catch (error) {
     next(error)
     res.status(400).json({ message: 'Error al obtener el contenido' })
@@ -154,6 +151,21 @@ const getOneLista = async (req, res, next) => {
   try {
     const { codigoLista } = req.params
     const query = await pool.query('SELECT * FROM listaCompra WHERE codigo_lista = $1', [codigoLista])
+    if (query.rowCount === 0) {
+      res.status(404).json({ message: 'Lista no encontrada' })
+    } else {
+      res.status(200).json(query.rows[0])
+    }
+  } catch (error) {
+    next(error)
+    res.status(400).json({ message: 'Lista no encontrada' })
+  }
+}
+
+const getCodigoLista = async (req, res, next) => {
+  try {
+    const { nombreLista } = req.params
+    const query = await pool.query('SELECT * FROM listaCompra WHERE nombre_lista = $1', [nombreLista])
     if (query.rowCount === 0) {
       res.status(404).json({ message: 'Lista no encontrada' })
     } else {
@@ -189,6 +201,7 @@ module.exports = {
   getOneLista,
   getListaFavUsuario,
   getProductosLista,
+  getCodigoLista,
   deleteLista,
   deleteFromLista
 }

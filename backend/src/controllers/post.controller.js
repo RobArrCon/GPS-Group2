@@ -8,10 +8,7 @@ const createPost = async (req, res, next) => {
       res.status(302).json({ message: 'Publicación ya existe' })
     }
     const fecha = new Date()
-    const dia = fecha.getDate()
-    const mes = fecha.getMonth() + 1
-    const year = fecha.getFullYear()
-    const fechaFinal = year + '-' + mes + '-' + dia
+    const fechaFinal = fecha.toLocaleDateString()
     const query = await pool.query('INSERT INTO post (titulo_post, detalle_post, fecha_publicacion, nombre_usuario) VALUES($1,$2,$3,$4) RETURNING *',
       [tituloPost, detallePost, fechaFinal, nombreUsuario])
     res.status(200).json(query.rows[0])
@@ -101,11 +98,26 @@ const deletePost = async (req, res, next) => {
   } catch (error) {}
 }
 
+const getPostsAndComments = async (req, res, next) => {
+  try {
+    const query = await pool.query('SELECT p.codigo_post, p.titulo_post, p.fecha_publicacion, p.detalle_post, COUNT(c.codigo_comentario) AS cantidad_comentarios FROM Post p LEFT JOIN Comentario c ON p.codigo_post = c.codigo_post GROUP BY p.codigo_post, p.titulo_post, p.fecha_publicacion')
+    if (query.rowCount === 0) {
+      res.status(404).json({ message: 'No existen publicaciones' })
+    } else {
+      res.status(200).json(query.rows)
+    }
+  } catch (error) {
+    next(error)
+    res.status(400).json({ message: 'Error en obtención de publicaciones' })
+  }
+}
+
 module.exports = {
   createPost,
   getAllPost,
   getAllPostUsuario,
   getOnePost,
+  getPostsAndComments,
   updatePost,
   deletePost
 }
