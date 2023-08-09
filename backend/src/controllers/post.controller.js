@@ -21,26 +21,7 @@ const createPost = async (req, res, next) => {
 const getAllPost = async (req, res, next) => {
   try {
     const query = await pool.query('SELECT * FROM post')
-    if (query.rowCount === 0) {
-      res.status(404).json({ message: 'No existen publicaciones' })
-    } else {
-      res.status(200).json(query.rows)
-    }
-  } catch (error) {
-    next(error)
-    res.status(400).json({ message: 'Error al obtener el contenido' })
-  }
-}
-
-const getAllPostUsuario = async (req, res, next) => {
-  try {
-    const { nombreUsuario } = req.params
-    const query = await pool.query('SELECT * FROM post WHERE nombre_usuario = $1', [nombreUsuario])
-    if (query.rowCount === 0) {
-      res.status(404).json({ message: 'Usuario no cuenta con publicaciones' })
-    } else {
-      res.status(200).json(query.rows)
-    }
+    res.status(200).json(query.rows)
   } catch (error) {
     next(error)
     res.status(400).json({ message: 'Error al obtener el contenido' })
@@ -62,27 +43,6 @@ const getOnePost = async (req, res, next) => {
   }
 }
 
-const updatePost = async (req, res, next) => {
-  try {
-    const { codigoPost, tituloPost, detallePost } = req.body
-    const query0 = await pool.query('SELECT * FROM post WHERE codigo_post = $1', [codigoPost])
-    if (query0.rowCount === 0) {
-      res.status(404).json({ message: 'Publicación no existe' })
-    }
-    const query = await pool.query(
-      'UPDATE post SET titulo_post = $2, detalle_post = $3 WHERE codigo_post = $1 RETURNING *',
-      [codigoPost, tituloPost, detallePost]
-    )
-    if (query.rowCount === 0) {
-      return res.status(403).json({ message: 'No es posible modificar la publicación' })
-    }
-    res.status(200).json(query.rows[0])
-  } catch (error) {
-    next(error)
-    res.status(400).json({ message: 'Error al actualizar la publicación' })
-  }
-}
-
 const deletePost = async (req, res, next) => {
   try {
     const { codigoPost } = req.params
@@ -101,11 +61,7 @@ const deletePost = async (req, res, next) => {
 const getPostsAndComments = async (req, res, next) => {
   try {
     const query = await pool.query('SELECT p.codigo_post, p.titulo_post, p.fecha_publicacion, p.detalle_post, COUNT(c.codigo_comentario) AS cantidad_comentarios FROM Post p LEFT JOIN Comentario c ON p.codigo_post = c.codigo_post GROUP BY p.codigo_post, p.titulo_post, p.fecha_publicacion')
-    if (query.rowCount === 0) {
-      res.status(404).json({ message: 'No existen publicaciones' })
-    } else {
-      res.status(200).json(query.rows)
-    }
+    res.status(200).json(query.rows)
   } catch (error) {
     next(error)
     res.status(400).json({ message: 'Error en obtención de publicaciones' })
@@ -115,9 +71,7 @@ const getPostsAndComments = async (req, res, next) => {
 module.exports = {
   createPost,
   getAllPost,
-  getAllPostUsuario,
   getOnePost,
   getPostsAndComments,
-  updatePost,
   deletePost
 }
