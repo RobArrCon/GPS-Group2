@@ -10,7 +10,7 @@ const createUsuario = async (req, res, next) => {
     if (query.rowCount === 0) {
       const salt = await bcrypt.genSalt(10)
       const hash = await bcrypt.hash(contrasena, salt)
-      const query1 = await pool.query('INSERT INTO usuario (nombre_usuario,correo,clave_user,rol_user) VALUES($1,$2,$3,$4) RETURNING *',
+      const query1 = await pool.query('INSERT INTO usuario (nombre_usuario,correo_usuario ,contrasena_usuario ,rol_usuario ) VALUES($1,$2,$3,$4) RETURNING *',
         [usuario, correo, hash, rol])
 
       res.status(200).json(query1.rows[0])
@@ -103,7 +103,7 @@ const ChangeContrasena = async (req, res, next) => {
     const salt = await bcrypt.genSalt(10)
     const hash = await bcrypt.hash(contrasenaNueva, salt)
 
-    await pool.query('UPDATE usuario SET clave_user = $1 WHERE nombre_usuario = $2', [
+    await pool.query('UPDATE usuario SET contrasena_usuario = $1 WHERE nombre_usuario = $2', [
       hash,
       usuario
     ])
