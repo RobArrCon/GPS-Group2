@@ -9,7 +9,6 @@ const createComentario = async (req, res, next) => {
       [nombreUsuario, codigoPost, detalleComentario, fechaFinal])
     res.status(200).json(query.rows[0])
   } catch (error) {
-    next(error)
     res.status(400).json({ message: 'No es posible crear el comentario' })
   }
 }
@@ -25,12 +24,21 @@ const getAllComentarioPost = async (req, res, next) => {
       res.status(200).json(query.rows)
     }
   } catch (error) {
-    next(error)
+    res.status(400).json({ message: 'Error al obtener el contenido' })
+  }
+}
+
+const getAllComentarios = async (req, res, next) => {
+  try {
+    const query = await pool.query('SELECT * FROM comentario ')
+    res.status(200).json(query.rows)
+  } catch (error) {
     res.status(400).json({ message: 'Error al obtener el contenido' })
   }
 }
 
 module.exports = {
   createComentario,
-  getAllComentarioPost
+  getAllComentarioPost,
+  getAllComentarios
 }

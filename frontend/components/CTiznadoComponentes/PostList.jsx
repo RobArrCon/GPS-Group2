@@ -47,17 +47,19 @@ const PostList = ({ publicacion, comentarios, onClose }) => {
     values.detalleComentario = comentarioText
     values.codigoPost = publicacion.codigo_post
     values.nombreUsuario = localStorage.getItem('usuario')
-    try {
-      const response = await axios.post(`${process.env.API_URL}/comentario`, values)
-      if (response.status === 200) {
-        cerrarCrearComentarioDialog()
-        onClose()
-        Swal.fire({ title: 'Lista creada correctamente' }).then(() => { window.location.reload() })
-      } else {
-        console.log('fallo')
+    if (!values.detalleComentario === '') {
+      try {
+        const response = await axios.post(`${process.env.API_URL}/comentario`, values)
+        if (response.status === 200) {
+          cerrarCrearComentarioDialog()
+          onClose()
+          Swal.fire({ title: 'Comentario enviado correctamente' }).then(() => { window.location.reload() })
+        } else {
+          console.log('fallo')
+        }
+      } catch (error) {
+        console.error('Error:', error)
       }
-    } catch (error) {
-      console.error('Error:', error)
     }
   }
 

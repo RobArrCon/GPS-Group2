@@ -16,7 +16,6 @@ const createLista = async (req, res, next) => {
       res.status(302).json({ message: 'Lista ya existe' })
     }
   } catch (error) {
-    next(error)
     res.status(400).json({ message: 'No es posible crear la lista' })
   }
 }
@@ -42,7 +41,6 @@ const addToLista = async (req, res, next) => {
       res.status(302).json({ message: 'Producto ya existe en la lista' })
     }
   } catch (error) {
-    next(error)
     res.status(400).json({ message: 'No es posible añadir producto' })
   }
 }
@@ -63,7 +61,6 @@ const deleteFromLista = async (req, res, next) => {
       res.status(200).json({ message: 'Producto eliminada exitosamente de la lista' })
     }
   } catch (error) {
-    next(error)
     res.status(400).json({ message: 'No es posible eliminar producto' })
   }
 }
@@ -85,8 +82,6 @@ const createListaFav = async (req, res, next) => {
       }
     }
   } catch (error) {
-    console.error(error)
-    next(error)
     res.status(400).json({ message: 'No es posible crear la lista' })
   }
 }
@@ -101,7 +96,6 @@ const getAllListasUsuario = async (req, res, next) => {
       res.status(200).json(query.rows)
     }
   } catch (error) {
-    next(error)
     res.status(400).json({ message: 'Error al obtener el contenido' })
   }
 }
@@ -115,7 +109,6 @@ const getAllListas = async (req, res, next) => {
       res.status(200).json(query.rows)
     }
   } catch (error) {
-    next(error)
     res.status(400).json({ message: 'Error al obtener el contenido' })
   }
 }
@@ -131,7 +124,6 @@ const getListaFavUsuario = async (req, res, next) => {
       res.status(200).json(query.rows)
     }
   } catch (error) {
-    next(error)
     res.status(400).json({ message: 'Error al obtener el contenido' })
   }
 }
@@ -142,7 +134,6 @@ const getProductosLista = async (req, res, next) => {
     const query = await pool.query('SELECT * FROM Producto_IN_ListaCompra P JOIN Producto Pr ON P.codigo_producto = Pr.codigo_producto WHERE codigo_lista = $1', [codigoLista])
     res.status(200).json(query.rows)
   } catch (error) {
-    next(error)
     res.status(400).json({ message: 'Error al obtener el contenido' })
   }
 }
@@ -157,7 +148,6 @@ const getOneLista = async (req, res, next) => {
       res.status(200).json(query.rows[0])
     }
   } catch (error) {
-    next(error)
     res.status(400).json({ message: 'Lista no encontrada' })
   }
 }
@@ -172,7 +162,6 @@ const getCodigoLista = async (req, res, next) => {
       res.status(200).json(query.rows[0])
     }
   } catch (error) {
-    next(error)
     res.status(400).json({ message: 'Lista no encontrada' })
   }
 }
@@ -189,7 +178,9 @@ const deleteLista = async (req, res, next) => {
       return res.status(404).json({ message: 'No es posible eliminar la lista' })
     }
     return res.status(200).json({ message: 'Lista eliminada exitosamente' })
-  } catch (error) {}
+  } catch (error) {
+    res.status(400).json({ message: 'No ha sido posible eliminar la lista' })
+  }
 }
 
 module.exports = {
