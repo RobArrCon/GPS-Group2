@@ -68,7 +68,7 @@ const LoginUsuario = async (req, res, next) => {
     if (!user) {
       return res.status(401).json({ message: 'Rut inconrrecto' })
     }
-    const contrasenaValida = await bcrypt.compare(contrasena, user.clave_user)
+    const contrasenaValida = await bcrypt.compare(contrasena, user.contrasena_usuario)
 
     if (!contrasenaValida) {
       return res.status(401).json({ message: 'Contrasena inconrrecta' })
@@ -94,7 +94,7 @@ const ChangeContrasena = async (req, res, next) => {
     }
 
     const user = query.rows[0]
-    const contrasenaValida = await bcrypt.compare(contrasenaActual, user.clave_user)
+    const contrasenaValida = await bcrypt.compare(contrasenaActual, user.contrasena_usuario)
 
     if (!contrasenaValida) {
       return res.status(400).json({ message: 'contrasena incorrecta' })

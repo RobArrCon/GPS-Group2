@@ -1,34 +1,58 @@
-import * as React from 'react'
-import { Typography, Box } from '@mui/material'
-import MyBackground from '../components/Background.jsx'
-import MyImage from '../components/Image.jsx'
-import MyButton from '../components/Button.jsx'
+import { React, useState, useEffect } from 'react'
+import { Typography, Box, Grid } from '@mui/material'
+import Head from 'next/head'
+import { useRouter } from 'next/router'
+import MyBackground from '../components/LorellanaComponents/Background.jsx'
+import MyImage from '../components/LorellanaComponents/ImagenInicio.jsx'
+import MyButton from '../components/LorellanaComponents/Button.jsx'
 
 export default function Index () {
+  const router = useRouter()
+  const [loading, setLoading] = useState(false)
+
+  // useEffect(() => {
+  //   const storedRut = localStorage.getItem('usuario')
+  //   const storedTipoUsuario = localStorage.getItem('tipoUsuario')
+
+  //   if (storedRut && storedTipoUsuario) {
+  //     if (storedTipoUsuario === 'administrador') {
+  //       router.push({ pathname: '/administrador/Inicio_Administrador' })
+  //     } else if (storedTipoUsuario === 'usuario') {
+  //       router.push({ pathname: '/usuario/inicio_estudiante' })
+  //     }
+  //   } else {
+  //     setLoading(false)
+  //   }
+  // }, [])
   return (
-     <MyBackground>
-        <Typography
-          variant='body1'
-          sx={{
-            fontSize: {
-              xs: '18px',
-              sm: '26px',
-              md: '40px'
-            },
-            fontFamily: 'Roboto',
-            fontWeight: '700',
-            mt: 10,
-            ml: {
-              xs: '5%',
-              sm: '10%',
-              md: '20%'
-            },
-            color: 'white'
-          }}
-        >
+    <MyBackground>
+      <Head>
+        <title>Vegateca</title>
+      </Head>
+      {!loading && (
+      <Grid>
+      <Typography
+        variant='body1'
+        sx={{
+          fontSize: {
+            xs: '18px',
+            sm: '26px',
+            md: '40px'
+          },
+          fontFamily: 'Roboto',
+          fontWeight: '700',
+          mt: 10,
+          ml: {
+            xs: '5%',
+            sm: '10%',
+            md: '20%'
+          },
+          color: 'white'
+        }}
+      >
         Bienvenido a la
-        </Typography>
-        <Typography
+      </Typography>
+      <Typography
         sx={{
           fontSize: {
             xs: '40px',
@@ -44,6 +68,7 @@ export default function Index () {
         }}>
         Vegateca
         </Typography>
+
         <Box
           sx={{
             backgroundColor: '#cee9ba',
@@ -52,6 +77,7 @@ export default function Index () {
             borderRadius: '16px',
             display: 'flex',
             alignItems: 'center',
+            padding: 'auto',
             textAlign: 'center',
             justifyContent: 'center',
             '@media (max-width: 768px)': {
@@ -59,7 +85,7 @@ export default function Index () {
             }
           }}
         >
-           <MyImage ruta={'vegateca.png'} />
+           <MyImage ruta={'vegateca-1.webp'} />
            <Box >
             <Typography
               variant="body1"
@@ -85,39 +111,40 @@ export default function Index () {
               en un solo lugar.
             </Typography>
           </Box>
+      </Box>
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          mt: 4,
+          mb: 4,
+          flexDirection: 'column'
+        }}
+      >
+        <Typography
+          variant='body1'
+          sx={{
+            fontSize: {
+              xs: '12px',
+              sm: '16px',
+              md: '20px'
+            },
+            fontFamily: 'Roboto',
+            fontWeight: '700',
+            color: 'white',
+            mb: 4
+          }}
+        >
+          ¡Te invitamos a ser parte de nuestra comunidad!
+        </Typography>
+        <Box sx={{ display: 'flex', flexDirection: 'row', gap: '10px' }}>
+          <MyButton text="INICIAR SESIÓN" href="/Login"/>
+          <MyButton text="REGISTRATE" href="/Register" />
+        </Box>
     </Box>
-    <Box
-  sx={{
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    mt: 4,
-    mb: 4,
-    flexDirection: 'column'
-  }}
->
-  <Typography
-    variant='body1'
-    sx={{
-      fontSize: {
-        xs: '12px',
-        sm: '16px',
-        md: '20px'
-      },
-      fontFamily: 'Roboto',
-      fontWeight: '700',
-      color: 'white',
-      mb: 4
-    }}
-  >
-    ¡Te invitamos a ser parte de nuestra comunidad!
-  </Typography>
-  <Box sx={{ display: 'flex', flexDirection: 'row', gap: '10px' }}>
-    <MyButton text="INICIAR SESIÓN" />
-    <MyButton text="REGISTRATE" />
-  </Box>
-</Box>
-
+    </Grid>
+      )}
     </MyBackground>
   )
 }

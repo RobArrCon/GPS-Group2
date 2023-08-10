@@ -24,6 +24,7 @@ const createLista = async (req, res, next) => {
 const addToLista = async (req, res, next) => {
   try {
     const { codigoProducto, codigoLista } = req.body
+    console.log(codigoProducto, codigoLista)
     const query0 = await pool.query('SELECT * FROM producto WHERE codigo_producto = $1', [codigoProducto])
     if (query0.rowCount === 0) {
       res.status(404).json({ message: 'Producto no existe' })
@@ -48,10 +49,11 @@ const addToLista = async (req, res, next) => {
 
 const deleteFromLista = async (req, res, next) => {
   try {
-    const { codigoLista, codigoProducto } = req.body
-    const query0 = await pool.query('SELECT * FROM Producto_IN_ListaCompra WHERE codigo_lista = $1 AND codigo_producto = $2', [codigoLista, codigoProducto])
+    const { codigoLista, codigoProducto } = req.params
+    const query0 = await pool.query('SELECT * FROM Producto_IN_ListaCompra WHERE codigo_lista = $1 AND codigo_producto = $2',
+      [codigoLista, codigoProducto])
     if (query0.rowCount === 0) {
-      res.status(404).json({ message: 'Producto no existe en la lista' })
+      res.status(300).json({ message: 'Producto no existe' })
     }
     const query = await pool.query('DELETE FROM Producto_IN_ListaCompra WHERE codigo_lista = $1 AND codigo_producto = $2',
       [codigoLista, codigoProducto])
@@ -68,7 +70,7 @@ const deleteFromLista = async (req, res, next) => {
 
 const createListaFav = async (req, res, next) => {
   try {
-    const { nombreUsuario } = req.body
+    const { nombreUsuario } = req.params
     const query0 = await pool.query('SELECT * FROM usuario WHERE nombre_usuario = $1', [nombreUsuario])
     if (query0.rowCount === 0) {
       res.status(404).json({ message: 'Usuario no existe' })
@@ -83,6 +85,7 @@ const createListaFav = async (req, res, next) => {
       }
     }
   } catch (error) {
+    console.error(error)
     next(error)
     res.status(400).json({ message: 'No es posible crear la lista' })
   }

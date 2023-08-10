@@ -2,19 +2,19 @@ const pool = require('../db')
 
 const createLink = async (req, res, next) => {
   try {
-    const { codigoProducto, url } = req.body
-
-    const query = await pool.query('SELECT * FROM link WHERE codigo_producto = $1',
+    const { codigoProducto, url, supermercado } = req.body
+    const query = await pool.query('SELECT * FROM producto WHERE codigo_producto = $1',
       [codigoProducto])
 
     if (query.rowCount > 0) {
-      const query1 = await pool.query('INSERT INTO link (codigo_producto, url) VALUES VALUES($1, $2)RETURNING *',
-        [codigoProducto, url])
+      const query1 = await pool.query('INSERT INTO link (codigo_producto, url, supermercado) VALUES ($1, $2, $3) RETURNING *',
+        [codigoProducto, url, supermercado])
       res.status(200).json(query1.rows[0])
     } else {
       res.status(400).json({ message: 'Este producto no existe en la base de datos' })
     }
   } catch (error) {
+    console.error(error)
     next(error)
     res.status(400).json({ message: 'No se pudo ingresar este link en la base de datos' })
   }
@@ -23,6 +23,7 @@ const createLink = async (req, res, next) => {
 const getLinks = async (req, res, next) => {
   try {
     const { codigoProducto } = req.params
+    console.log(codigoProducto)
     const query = await pool.query('SELECT * FROM link WHERE codigo_producto = $1',
       [codigoProducto])
     res.status(200).json(query.rows)
