@@ -5,6 +5,7 @@ import Head from 'next/head'
 import MyGeneralBackground from '../components/CTiznadoComponentes/GeneralBackground'
 import Comment from '../components/LorellanaComponents/Comment.jsx'
 import AddList from '../components/LorellanaComponents/AddList.jsx'
+import Swal from 'sweetalert2'
 
 import { useRouter } from 'next/router'
 
@@ -17,6 +18,54 @@ const Producto = () => {
   const [link, setLink] = useState([])
   const [number, setNumber] = useState(0)
   const [arrayNombres, setArray] = useState([])
+
+  /* CORRECIÓN DE CODIGO: Agregar boton para mostrar ingredientes */
+  const [values] = useState({
+    codigoProducto: '',
+    codigo: ''
+  })
+
+  const [ingredientes, setIngredientes] = useState([])
+  const allIngredientes = []
+
+  const getTodos = async () => {
+    const response = await axios.get(`${process.env.API_URL}/ingrediente`)
+    const ingredientesData = response.data
+    console.log('ayudaaaa', ingredientesData)
+    setIngredientes(ingredientesData)
+  }
+  const setTodos = () => {
+    ingredientes.map(nombre => (
+      allIngredientes.push(
+        nombre.nombre_ingrediente
+      )
+    ))
+  }
+
+  const handleIngredientes = async () => {
+    const AddList = await Swal.fire({
+      title: 'Selecciona un ingrediente a agregar',
+      input: 'select',
+      inputOptions: allIngredientes,
+      inputPlaceholder: 'Ingredientes',
+      showCancelButton: true,
+      cancelButtonText: 'Volver atras',
+      inputValidator: (value) => {
+        if (!value) {
+          return 'elije un ingrediente'
+        }
+      }
+    })
+    if (AddList.isConfirmed) {
+      values.codigo = ingredientes[AddList.value].codigo_ingrediente
+      console.log('AXIOS:', values)
+      const response = await axios.post(`${process.env.API_URL}/conectar`, values)
+      if (response.status === 200) {
+        Swal.fire({ title: 'Ingrediente agregado correctamente' }).then(() => { window.location.reload() })
+      }
+    }
+  }
+  // Fin de elementos agregados para el cambio de Bryan
 
   const getUsuario = async (usuario) => {
     if (usuario) {
@@ -37,6 +86,7 @@ const Producto = () => {
       getLinks(response.data.codigo_producto)
       const ingredientesResponse = await axios.get(`${process.env.API_URL}/enproductos/${response.data.codigo_producto}`)
       setArray(getIngredientesForProduct(ingredientesResponse.data))
+      values.codigoProducto = response.data.codigo_producto
     } catch (error) {
       console.error(error)
     }
@@ -134,6 +184,8 @@ const Producto = () => {
     console.log('Fetching usuario:', usuario)
     getUsuario(usuario)
     getProducto(nombreProducto)
+    // Implementar Get para cambio
+    getTodos()
   }, [nombreProducto])
 
   return (
@@ -179,6 +231,11 @@ const Producto = () => {
                 <Typography variant="body1" sx={{ color: 'text.secondary', marginBottom: '8px' }}>Ingredientes:</Typography>
                   {showingredientes()}
                 </Box>
+
+                { setTodos()}
+
+                <Button onClick={() => handleIngredientes()}>AGREGAR INGREDIENTE</Button>
+
                 <Box sx={{ marginTop: '16px' }}>
   <Typography variant="body1" sx={{ color: 'text.secondary', marginBottom: '8px' }}>
     Donde adquirirlo:
