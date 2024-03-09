@@ -14,11 +14,9 @@ CREATE TABLE Usuario (
 
 CREATE TABLE Receta (
   codigo_receta SERIAL NOT NULL,
-  nombre_usuario VARCHAR(45) NOT NULL,
   nombre_receta VARCHAR(100),
   preparacion  TEXT,
   PRIMARY KEY (codigo_receta),
-  FOREIGN KEY (nombre_usuario) REFERENCES Usuario(nombre_usuario)
 );
 
   CREATE TABLE Ingrediente (
